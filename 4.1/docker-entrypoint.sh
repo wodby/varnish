@@ -23,7 +23,8 @@ execInitScripts() {
 
 checkVarnishSecret() {
     if [[ -z $VARNISH_SECRET ]]; then
-        export VARNISH_SECRET=$(pwgen -s 24 1)
+        export VARNISH_SECRET=$(pwgen -s 128 1)
+        echo "Generated Varnish secret: ${VARNISH_SECRET}"
     fi
 }
 
