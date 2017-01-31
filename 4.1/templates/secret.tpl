@@ -1,0 +1,1 @@
+{{ getenv "VARNISH_SECRET" }}

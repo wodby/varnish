@@ -1,0 +1,15 @@
+version: "2"
+
+services:
+  nginx:
+    image: wodby/nginx
+
+  varnish:
+    image: $IMAGE
+    depends_on:
+      - nginx
+    environment:
+      VARNISH_BACKEND_HOST: nginx
+      VARNISH_BACKEND_PORT: 80
+    ports:
+      - "8001:6081"
