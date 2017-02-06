@@ -10,15 +10,15 @@ env:
   matrix:
     - VERSION=4.1
 
-install:
-  - cd ./$VERSION
-  - make
-
 before_install:
   - sudo rm /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
+
+install:
+  - cd ./$VERSION
+  - make
 
 script: make test
 
