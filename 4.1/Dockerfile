@@ -1,7 +1,7 @@
 FROM alpine:3.5
 MAINTAINER Wodby <hello@wodby.com>
 
-ENV VARNISH_VER 1.10.2
+ENV VARNISH_VER 4.1.3-r0
 ENV GOTLP_VER 0.1.5
 
 RUN apk --update --no-cache add \
@@ -9,7 +9,7 @@ RUN apk --update --no-cache add \
         ca-certificates \
         wget \
         pwgen \
-        varnish=4.1.3-r0 \
+        varnish=${VARNISH_VER} \
         && \
 
     # Download and install Gotlp
