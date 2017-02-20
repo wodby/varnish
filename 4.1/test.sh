@@ -12,7 +12,7 @@ stopDockerCompose() {
 
 waitForVarnish() {
     for i in {30..0}; do
-        if curl -s "${1}:${2}" &> /dev/null ; then
+        if curl -s "$url" &> /dev/null ; then
             break
         fi
         echo 'Varnish start process in progress...'
@@ -21,24 +21,12 @@ waitForVarnish() {
 }
 
 checkVarnishResponse() {
-    curl -s "${1}:${2}" | grep 'Welcome to nginx!'
+    curl -s "$url" | grep 'Welcome to nginx!'
 }
 
-runTests() {
-    host=localhost
-    port=8001
+url=localhost:8001
 
-    startDockerCompose
-    waitForVarnish ${host} ${port}
-    checkVarnishResponse ${host} ${port}
-}
-
-runCleanup() {
-    stopDockerCompose
-}
-
-if [ "${1}" == 'clean' ]; then
-    runCleanup
-else
-    runTests
-fi
+startDockerCompose
+waitForVarnish
+checkVarnishResponse
+stopDockerCompose

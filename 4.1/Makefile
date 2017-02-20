@@ -1,33 +1,29 @@
 -include env_make
 
-NS = wodby
 VERSION ?= 4.1
 
 REPO = varnish
 NAME = varnish-$(VERSION)
 
-.PHONY: build test test-clean push shell run start stop logs rm release
+.PHONY: build test test-clean push shell run start stop logs clean release
 
 build:
-	docker build -t $(NS)/$(REPO):$(VERSION) ./
+	docker build -t $(REPO):$(VERSION) ./
 
 test:
-	IMAGE=$(NS)/$(REPO):$(VERSION) ./test.sh
-
-test-clean:
-	IMAGE=$(NS)/$(REPO):$(VERSION) ./test.sh clean
+	IMAGE=$(REPO):$(VERSION) ./test.sh
 
 push:
-	docker push $(NS)/$(REPO):$(VERSION)
+	docker push $(REPO):$(VERSION)
 
 shell:
-	docker run --rm --name $(NAME) -i -t $(PORTS) $(VOLUMES) $(ENV) $(NS)/$(REPO):$(VERSION) /bin/bash
+	docker run --rm --name $(NAME) -i -t $(PORTS) $(VOLUMES) $(ENV) $(REPO):$(VERSION) /bin/bash
 
 run:
-	docker run --rm --name $(NAME) $(PORTS) $(VOLUMES) $(ENV) $(NS)/$(REPO):$(VERSION) $(CMD)
+	docker run --rm --name $(NAME) $(PORTS) $(VOLUMES) $(ENV) $(REPO):$(VERSION) $(CMD)
 
 start:
-	docker run -d --name $(NAME) $(PORTS) $(VOLUMES) $(ENV) $(NS)/$(REPO):$(VERSION)
+	docker run -d --name $(NAME) $(PORTS) $(VOLUMES) $(ENV) $(REPO):$(VERSION)
 
 stop:
 	docker stop $(NAME)
@@ -35,8 +31,8 @@ stop:
 logs:
 	docker logs $(NAME)
 
-rm:
-	docker rm -f $(NAME)
+clean:
+	-docker rm -f $(NAME)
 
 release: build
 	make push -e VERSION=$(VERSION)

@@ -2,7 +2,7 @@ version: "2"
 
 services:
   nginx:
-    image: wodby/nginx
+    image: nginx:stable-alpine
 
   varnish:
     image: $IMAGE
