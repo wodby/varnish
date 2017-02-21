@@ -2,7 +2,7 @@
 
 VERSION ?= 4.1
 
-REPO = varnish
+REPO = wodby/varnish
 NAME = varnish-$(VERSION)
 
 .PHONY: build test test-clean push shell run start stop logs clean release
