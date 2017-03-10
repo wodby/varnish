@@ -4,9 +4,11 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/varnish.svg)](https://hub.docker.com/r/wodby/varnish)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/varnish.svg)](https://hub.docker.com/r/wodby/varnish)
 
+[![Wodby Slack](https://www.google.com/s2/favicons?domain=www.slack.com) Join us on Slack](https://slack.wodby.com/)
+
 ## Supported tags and respective `Dockerfile` links
 
-- [`4.1`, `latest` (*4.1/Dockerfile*)](https://github.com/wodby/varnish/tree/master/4.1/Dockerfile)
+- [`4.1-2.0.0`, `4.1`, `latest` (*4.1/Dockerfile*)](https://github.com/wodby/varnish/tree/master/4.1/Dockerfile)
 
 ## Environment Variables Available for Customization
 
@@ -24,3 +26,7 @@
 | VARNISH_THREAD_POOL_MAX       | Int    | 1000                     |   | |
 | VARNISH_STORAGE_SIZE          | String |                          |   | |
 | VARNISH_SECRET                | String | _Will be generated automatically_ |   | | 
+
+## Using in Production
+
+Deploy Varnish container to your own server via [![Wodby](https://www.google.com/s2/favicons?domain=wodby.com) Wodby](https://wodby.com).
