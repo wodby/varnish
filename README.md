@@ -1,4 +1,4 @@
-# Generic varnish docker container
+# Generic Varnish docker image
 
 [![Build Status](https://travis-ci.org/wodby/varnish.svg?branch=master)](https://travis-ci.org/wodby/varnish)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/varnish.svg)](https://hub.docker.com/r/wodby/varnish)
@@ -26,6 +26,36 @@
 | VARNISH_THREAD_POOL_MAX       | Int    | 1000                     |   | |
 | VARNISH_STORAGE_SIZE          | String |                          |   | |
 | VARNISH_SECRET                | String | _Will be generated automatically_ |   | | 
+
+## Actions
+
+Usage:
+```
+make COMMAND [params ...]
+
+commands:
+    check-ready [host=<nginx> port=<port> max_try=<10> wait_seconds=<5>]
+    flush [host=<nginx> port_adm=<admin port>]
+ 
+default params values:
+    host localhost
+    port 6081
+    port_adm 6082
+    max_try 30
+    wait_seconds 1
+```
+
+Examples:
+
+```bash
+# Wait for Varnish to start
+docker exec -ti [ID] make check-ready -f /usr/local/bin/actions.mk
+
+# Flush cache
+docker exec -ti [ID] make flush host=varnish -f /usr/local/bin/actions.mk
+```
+
+You can skip -f option if you use run instead of exec.
 
 ## Using in Production
 

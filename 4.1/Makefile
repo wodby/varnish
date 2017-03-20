@@ -1,5 +1,3 @@
--include env_make
-
 VERSION ?= 4.1
 
 REPO = wodby/varnish
@@ -7,11 +5,13 @@ NAME = varnish-$(VERSION)
 
 .PHONY: build test test-clean push shell run start stop logs clean release
 
+default: build
+
 build:
 	docker build -t $(REPO):$(VERSION) ./
 
 test:
-	IMAGE=$(REPO):$(VERSION) ./test.sh
+	cd ./test && IMAGE=$(REPO):$(VERSION) ./test.sh
 
 push:
 	docker push $(REPO):$(VERSION)
@@ -36,5 +36,3 @@ clean:
 
 release: build
 	make push -e VERSION=$(VERSION)
-
-default: build

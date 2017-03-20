@@ -35,9 +35,4 @@ after_success: |
   fi
 
 after_failure:
-  - docker-compose -f test/docker-compose.yml
   - make logs
-
-notifications:
-  email:
-    on_success: never

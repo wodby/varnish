@@ -11,5 +11,3 @@ services:
     environment:
       VARNISH_BACKEND_HOST: nginx
       VARNISH_BACKEND_PORT: 80
-    ports:
-      - "8001:6081"

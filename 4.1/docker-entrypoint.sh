@@ -2,7 +2,7 @@
 
 set -e
 
-if [[ -n $DEBUG ]]; then
+if [[ -n "${DEBUG}" ]]; then
   set -x
 fi
 
@@ -22,7 +22,7 @@ execInitScripts() {
 }
 
 checkVarnishSecret() {
-    if [[ -z $VARNISH_SECRET ]]; then
+    if [[ -z "${VARNISH_SECRET}" ]]; then
         export VARNISH_SECRET=$(pwgen -s 128 1)
         echo "Generated Varnish secret: ${VARNISH_SECRET}"
     fi
@@ -37,4 +37,8 @@ execTpl 'default.vcl.tpl' '/etc/varnish/default.vcl'
 chmod +x /etc/init.d/varnishd
 execInitScripts
 
-exec "$@"
+if [[ "${1}" == 'make' ]]; then
+    exec "${@}" -f /usr/local/bin/actions.mk
+else
+    exec $@
+fi
