@@ -15,7 +15,7 @@
 | Environment Variable | Type | Default Value | Required | Description |
 | -------------------- | -----| ------------- | -------- | ----------- |
 | VARNISH_BACKEND_HOST          | String |                          | ✓ | |
-| VARNISH_BACKEND_PORT          | String |                          | ✓ | |
+| VARNISH_BACKEND_PORT          | String | 80                       |   | |
 | VARNISH_VCL_SCRIPT            | String | /etc/varnish/default.vcl |   | | 
 | VARNISH_SECRET_FILE           | String | /etc/varnish/secret      |   | |
 | VARNISH_MEMORY_SIZE           | String | 64m                      |   | |

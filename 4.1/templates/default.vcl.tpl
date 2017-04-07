@@ -15,7 +15,7 @@ vcl 4.0;
 # Default backend definition. Set this to point to your content server.
 backend default {
     .host = "{{ getenv "VARNISH_BACKEND_HOST" }}";
-    .port = "{{ getenv "VARNISH_BACKEND_PORT" }}";
+    .port = "{{ getenv "VARNISH_BACKEND_PORT" "80" }}";
 }
 
 sub vcl_recv {
