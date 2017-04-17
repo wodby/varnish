@@ -8,7 +8,7 @@
 
 ## Supported tags and respective `Dockerfile` links
 
-- [`4.1-2.0.0`, `4.1`, `latest` (*4.1/Dockerfile*)](https://github.com/wodby/varnish/tree/master/4.1/Dockerfile)
+- [`4.1-2.1.0`, `4.1`, `latest` (*4.1/Dockerfile*)](https://github.com/wodby/varnish/tree/master/4.1/Dockerfile)
 
 ## Environment Variables Available for Customization
 
