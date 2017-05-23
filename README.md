@@ -54,8 +54,6 @@ docker exec -ti [ID] make check-ready -f /usr/local/bin/actions.mk
 docker exec -ti [ID] make flush host=varnish -f /usr/local/bin/actions.mk
 ```
 
-You can skip -f option if you use run instead of exec.
-
 ## Using in production
 
 Deploy Varnish container to your own server via [![Wodby](https://www.google.com/s2/favicons?domain=wodby.com) Wodby](https://wodby.com).
