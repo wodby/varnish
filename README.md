@@ -1,31 +1,30 @@
-# Generic Varnish docker image
+# Varnish docker container image
 
 [![Build Status](https://travis-ci.org/wodby/varnish.svg?branch=master)](https://travis-ci.org/wodby/varnish)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/varnish.svg)](https://hub.docker.com/r/wodby/varnish)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/varnish.svg)](https://hub.docker.com/r/wodby/varnish)
-
-[![Wodby Slack](https://www.google.com/s2/favicons?domain=www.slack.com) Join us on Slack](https://slack.wodby.com/)
+[![Wodby Slack](http://slack.wodby.com/badge.svg)](http://slack.wodby.com)
 
 ## Supported tags and respective `Dockerfile` links
 
 - [`4.1-2.1.0`, `4.1`, `latest` (*4.1/Dockerfile*)](https://github.com/wodby/varnish/tree/master/4.1/Dockerfile)
 
-## Environment Variables Available for Customization
+## Environment variables available for customization
 
-| Environment Variable | Type | Default Value | Required | Description |
-| -------------------- | -----| ------------- | -------- | ----------- |
-| VARNISH_BACKEND_HOST          | String |                          | ✓ | |
-| VARNISH_BACKEND_PORT          | String | 80                       |   | |
-| VARNISH_VCL_SCRIPT            | String | /etc/varnish/default.vcl |   | | 
-| VARNISH_SECRET_FILE           | String | /etc/varnish/secret      |   | |
-| VARNISH_MEMORY_SIZE           | String | 64m                      |   | |
-| VARNISH_DEFAULT_TTL           | Int    | 120                      |   | |
-| VARNISH_THREAD_POOLS          | Int    | 1                        |   | |
-| VARNISH_THREAD_POOL_ADD_DELAY | Int    | 2                        |   | |
-| VARNISH_THREAD_POOL_MIN       | Int    | 100                      |   | |
-| VARNISH_THREAD_POOL_MAX       | Int    | 1000                     |   | |
-| VARNISH_STORAGE_SIZE          | String |                          |   | |
-| VARNISH_SECRET                | String | _Will be generated automatically_ |   | | 
+| Environment Variable | Default Value | Description |
+| -------------------- | ------------- | ----------- |
+| VARNISH_BACKEND_HOST          |                          | Mandatory |
+| VARNISH_BACKEND_PORT          | 80                       | |
+| VARNISH_VCL_SCRIPT            | /etc/varnish/default.vcl | | 
+| VARNISH_SECRET_FILE           | /etc/varnish/secret      | |
+| VARNISH_MEMORY_SIZE           | 64m                      | |
+| VARNISH_DEFAULT_TTL           | 120                      | |
+| VARNISH_THREAD_POOLS          | 1                        | |
+| VARNISH_THREAD_POOL_ADD_DELAY | 2                        | |
+| VARNISH_THREAD_POOL_MIN       | 100                      | |
+| VARNISH_THREAD_POOL_MAX       | 1000                     | |
+| VARNISH_STORAGE_SIZE          |                          | |
+| VARNISH_SECRET                | _Will be generated automatically_ | | 
 
 ## Actions
 
@@ -34,8 +33,8 @@ Usage:
 make COMMAND [params ...]
 
 commands:
-    check-ready [host=<nginx> port=<port> max_try=<10> wait_seconds=<5>]
-    flush [host=<nginx> port_adm=<admin port>]
+    check-ready [host port max_try wait_seconds]
+    flush [host port_adm]
  
 default params values:
     host localhost
@@ -57,6 +56,6 @@ docker exec -ti [ID] make flush host=varnish -f /usr/local/bin/actions.mk
 
 You can skip -f option if you use run instead of exec.
 
-## Using in Production
+## Using in production
 
 Deploy Varnish container to your own server via [![Wodby](https://www.google.com/s2/favicons?domain=wodby.com) Wodby](https://wodby.com).

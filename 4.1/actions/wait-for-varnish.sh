@@ -3,17 +3,19 @@
 set -e
 
 if [[ -n "${DEBUG}" ]]; then
-  set -x
+    set -x
 fi
 
 started=0
 host=$1
-port=$2
-max_try=$3
-wait_seconds=$4
+max_try=$2
+wait_seconds=$3
+delay_seconds=$4
+
+sleep "${delay_seconds}"
 
 for i in $(seq 1 "${max_try}"); do
-    if curl -s "${host}:${port}" &> /dev/null; then
+    if curl -s "${host}:6081" &> /dev/null; then
         started=1
         break
     fi
