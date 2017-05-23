@@ -24,7 +24,7 @@
 | VARNISH_THREAD_POOL_MIN       | 100                      | |
 | VARNISH_THREAD_POOL_MAX       | 1000                     | |
 | VARNISH_STORAGE_SIZE          |                          | |
-| VARNISH_SECRET                | _Will be generated automatically_ | | 
+| VARNISH_SECRET                |                          | Generated automatically if blank | 
 
 ## Actions
 
