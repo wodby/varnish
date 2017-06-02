@@ -33,15 +33,16 @@ Usage:
 make COMMAND [params ...]
 
 commands:
-    check-ready [host port max_try wait_seconds]
+    check-ready [host port max_try wait_seconds delay_seconds]
     flush [host port_adm]
  
 default params values:
     host localhost
     port 6081
     port_adm 6082
-    max_try 30
+    max_try 1
     wait_seconds 1
+    delay_seconds 0
 ```
 
 Examples:

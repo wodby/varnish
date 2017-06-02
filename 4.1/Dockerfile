@@ -1,4 +1,4 @@
-FROM alpine:3.5
+FROM alpine:3.6
 
 ENV VARNISH_VER 4.1.3-r0
 ENV GOTLP_VER 0.1.5

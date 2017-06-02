@@ -9,7 +9,7 @@ fi
 docker-compose up -d
 
 echo -n "Running check-ready action... "
-docker-compose exec varnish make check-ready max_try=10 wait_seconds=1 delay_seconds=1 -f /usr/local/bin/actions.mk
+docker-compose exec varnish make check-ready max_try=10 -f /usr/local/bin/actions.mk
 echo "OK"
 
 echo -n "Running flush action... "

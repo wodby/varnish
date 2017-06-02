@@ -28,17 +28,17 @@ checkVarnishSecret() {
     fi
 }
 
+checkVarnishSecret
+
+execTpl 'varnishd.init.d.tpl' '/etc/init.d/varnishd'
+execTpl 'secret.tpl' '/etc/varnish/secret'
+execTpl 'default.vcl.tpl' '/etc/varnish/default.vcl'
+
+chmod +x /etc/init.d/varnishd
+execInitScripts
+
 if [[ "${1}" == 'make' ]]; then
     exec "${@}" -f /usr/local/bin/actions.mk
 else
-    checkVarnishSecret
-
-    execTpl 'varnishd.init.d.tpl' '/etc/init.d/varnishd'
-    execTpl 'secret.tpl' '/etc/varnish/secret'
-    execTpl 'default.vcl.tpl' '/etc/varnish/default.vcl'
-
-    chmod +x /etc/init.d/varnishd
-    execInitScripts
-
     exec $@
 fi
