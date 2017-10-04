@@ -11,9 +11,9 @@ Images are built via [Travis CI](https://travis-ci.org/wodby/varnish) and publis
 
 ## Versions
 
-| varnish                                                            | Alpine Linux |
-| ------------------------------------------------------------------ | ------------ |
-| [4.1](https://github.com/wodby/varnish/tree/master/4.1/Dockerfile) | 3.6          |
+| Image tag (Dockerfile)                                             | Varnish | Alpine Linux |
+| ------------------------------------------------------------------ | ------- | ------------ |
+| [4.1.3](https://github.com/wodby/varnish/tree/master/4/Dockerfile) | 4.1.3   | 3.6          |
 
 ## Environment Variables
 

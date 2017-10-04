@@ -32,7 +32,6 @@ exec_tpl 'varnishd.init.d.tpl' '/etc/init.d/varnishd'
 exec_tpl 'secret.tpl' '/etc/varnish/secret'
 exec_tpl 'default.vcl.tpl' '/etc/varnish/default.vcl'
 
-chmod +x /etc/init.d/varnishd
 exec_init_scripts
 
 if [[ "${1}" == 'make' ]]; then

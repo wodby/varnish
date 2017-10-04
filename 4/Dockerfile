@@ -1,14 +1,18 @@
 FROM wodby/alpine:3.6-1.0.0
 
-ENV VARNISH_VER="4.1.3-r1"
+ARG VARNISH_VER
+
+ENV VARNISH_VER="${VARNISH_VER}" \
+    # TODO: remove hardcode once we support more versions.
+    VARNISH_VER_ALPINE="${VARNISH_VER}-r1"
 
 RUN apk --update --no-cache add \
         make \
         pwgen \
-        varnish=${VARNISH_VER} && \
+        varnish=${VARNISH_VER_ALPINE} && \
 
-    # Remove default varnishd init script
-    rm /etc/init.d/varnishd
+    # We don't use default init
+    echo "" > /etc/init.d/varnishd
 
 EXPOSE 6081 6082
 

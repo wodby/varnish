@@ -6,9 +6,8 @@ services:
 env:
   global:
     - DOCKER_COMPOSE_VERSION=1.10.0
-    - LATEST_VERSION=4.1
   matrix:
-    - VERSION=4.1
+    - LINE=4 VARNISH_VER=4.1.3
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
@@ -17,7 +16,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 script:
-  - cd ./$VERSION
+  - cd ./$LINE
   - make && make test
 
 after_success: |
@@ -26,10 +25,6 @@ after_success: |
     make release
 
     if [ -n "$TRAVIS_TAG" ]; then
-      make VERSION="$VERSION-$TRAVIS_TAG" release
-    fi
-
-    if [ "$VERSION" == "$LATEST_VERSION" ]; then
-      make VERSION=latest release
+      make TAG="$VARNISH_VER-$TRAVIS_TAG" release
     fi
   fi
