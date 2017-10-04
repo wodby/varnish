@@ -33,6 +33,3 @@ after_success: |
       make VERSION=latest release
     fi
   fi
-
-after_failure:
-  - make logs
