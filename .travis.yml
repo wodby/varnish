@@ -30,6 +30,6 @@ after_success: |
     fi
 
     if [ "$VARNISH_VER" == "$LATEST_VARNISH_VER" ]; then
-      make VERSION=latest release
+      make TAG=latest release
     fi
   fi
