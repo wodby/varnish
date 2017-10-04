@@ -17,20 +17,20 @@ Images are built via [Travis CI](https://travis-ci.org/wodby/varnish) and publis
 
 ## Environment Variables
 
-| Variable                      | Default Value            | Description                      |
-| ----------------------------- | ------------------------ | -------------------------------- |
-| VARNISH_BACKEND_HOST          |                          | Mandatory                        |
-| VARNISH_BACKEND_PORT          | 80                       |                                  |
-| VARNISH_VCL_SCRIPT            | /etc/varnish/default.vcl |                                  |
-| VARNISH_SECRET_FILE           | /etc/varnish/secret      |                                  |
-| VARNISH_MEMORY_SIZE           | 64m                      |                                  |
-| VARNISH_DEFAULT_TTL           | 120                      |                                  |
-| VARNISH_THREAD_POOLS          | 1                        |                                  |
-| VARNISH_THREAD_POOL_ADD_DELAY | 2                        |                                  |
-| VARNISH_THREAD_POOL_MIN       | 100                      |                                  |
-| VARNISH_THREAD_POOL_MAX       | 1000                     |                                  |
-| VARNISH_STORAGE_SIZE          |                          |                                  |
-| VARNISH_SECRET                |                          | Generated automatically if blank |
+| Variable                       | Default Value            | Description                      |
+| ------------------------------ | ------------------------ | -------------------------------- |
+| VARNISH_BACKEND_HOST           |                          | Mandatory                        |
+| VARNISH_BACKEND_PORT           | 80                       |                                  |
+| VARNISH_MEMORY_SIZE            | 64m                      |                                  |
+| VARNISH_SECRET                 |                          | Generated automatically if blank |
+| VARNISHD_DEFAULT_TTL           | 120                      |                                  |
+| VARNISHD_SECRET_FILE           | /etc/varnish/secret      |                                  |
+| VARNISHD_STORAGE_SIZE          |                          |                                  |
+| VARNISHD_THREAD_POOLS          | 1                        |                                  |
+| VARNISHD_THREAD_POOL_ADD_DELAY | 2                        |                                  |
+| VARNISHD_THREAD_POOL_MIN       | 100                      |                                  |
+| VARNISHD_THREAD_POOL_MAX       | 1000                     |                                  |
+| VARNISHD_VCL_SCRIPT            | /etc/varnish/default.vcl |                                  |
 
 ## Orchestration Actions
 
