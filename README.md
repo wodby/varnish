@@ -7,13 +7,16 @@
 
 ## Docker Images
 
-Images are built via [Travis CI](https://travis-ci.org/wodby/varnish) and published on [Docker Hub](https://hub.docker.com/r/wodby/varnish). 
+* All images are based on Alpine Linux
+* Base image: [wodby/alpine](https://github.com/wodby/alpine)
+* [Travis CI builds](https://travis-ci.org/wodby/varnish) 
+* [Docker Hub](https://hub.docker.com/r/wodby/varnish)
 
-## Versions
+For better reliability we release images with stability tags (`wodby/varnish:4.1.3-X.X.X`) which correspond to git tags. We **strongly recommend** using images only with stability tags. Below listed basic tags:
 
-| Image tag (Dockerfile)                                             | Varnish | Alpine Linux |
-| ------------------------------------------------------------------ | ------- | ------------ |
-| [4.1.3](https://github.com/wodby/varnish/tree/master/4/Dockerfile) | 4.1.3   | 3.6          |
+| Image tag (Dockerfile)                                                      | Varnish | Alpine Linux |
+| --------------------------------------------------------------------------- | ------- | ------------ |
+| [4.1.3 (latest)](https://github.com/wodby/varnish/tree/master/4/Dockerfile) | 4.1.3   | 3.6          |
 
 ## Environment Variables
 
