@@ -27,9 +27,7 @@ after_success: |
 
     if [[ -n "${TRAVIS_TAG}" ]]; then
       make release TAG="${VARNISH_VER}-${TRAVIS_TAG}"
-    fi
-
-    if [[ "${VARNISH_VER}" == "${LATEST_VARNISH_VER}" ]]; then
+    elif [[ "${VARNISH_VER}" == "${LATEST_VARNISH_VER}" ]]; then
       make release TAG="latest"
     fi
   fi
