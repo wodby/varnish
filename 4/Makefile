@@ -2,7 +2,13 @@ VARNISH_VER ?= 4.1.3
 TAG ?= $(VARNISH_VER)
 
 REPO = wodby/varnish
-NAME = varnish-$(TAG)
+NAME = varnish-$(VARNISH_VER)
+
+ifneq ($(STABILITY_TAG),)
+ifneq ($(TAG),latest)
+    override TAG := $(TAG)-$(STABILITY_TAG)
+endif
+endif
 
 .PHONY: build test test-clean push shell run start stop logs clean release
 
