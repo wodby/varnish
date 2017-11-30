@@ -1,10 +1,10 @@
 FROM wodby/alpine:3.6-1.0.0
 
 ARG VARNISH_VER
+ARG VARNISH_VER_ALPINE
 
 ENV VARNISH_VER="${VARNISH_VER}" \
-    # TODO: remove hardcode once we support more versions.
-    VARNISH_VER_ALPINE="${VARNISH_VER}-r1"
+    VARNISH_VER_ALPINE="${VARNISH_VER_ALPINE}"
 
 RUN apk --update --no-cache add \
         make \

@@ -1,4 +1,5 @@
-VARNISH_VER ?= 4.1.3
+VARNISH_VER ?= 4.1.9
+VARNISH_VER_ALPINE ?= 4.1.9-r0
 TAG ?= $(VARNISH_VER)
 
 REPO = wodby/varnish
@@ -15,7 +16,9 @@ endif
 default: build
 
 build:
-	docker build -t $(REPO):$(TAG) --build-arg VARNISH_VER=$(VARNISH_VER) ./
+	docker build -t $(REPO):$(TAG) \
+		--build-arg VARNISH_VER=$(VARNISH_VER) \
+		--build-arg VARNISH_VER_ALPINE=$(VARNISH_VER_ALPINE) ./
 
 test:
 	cd ./test && IMAGE=$(REPO):$(TAG) ./test.sh
