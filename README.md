@@ -24,8 +24,8 @@ For better reliability we additionally release images with stability tags (`wodb
 | ------------------------------------------ | -------------------------- | -------------------------------- |
 | `VARNISH_BACKEND_HOST`                     |                            | Mandatory                        |
 | `VARNISH_BACKEND_PORT`                     | `80`                       |                                  |
-| `VARNISH_MEMORY_SIZE`                      | `64m`                      |                                  |
 | `VARNISH_SECRET`                           |                            | Generated automatically if blank |
+| `VARNISHD_MEMORY_SIZE`                     | `64m`                      |                                  |
 | `VARNISHD_DEFAULT_TTL`                     | `120`                      |                                  |
 | `VARNISHD_PARAM_BAN_LURKER_AGE`            | `60.000`                   |                                  |
 | `VARNISHD_PARAM_BAN_LURKER_BATCH`          | `1000`                     |                                  |
