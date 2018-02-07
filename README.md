@@ -3,9 +3,13 @@
 [![Build Status](https://travis-ci.org/wodby/varnish.svg?branch=master)](https://travis-ci.org/wodby/varnish)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/varnish.svg)](https://hub.docker.com/r/wodby/varnish)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/varnish.svg)](https://hub.docker.com/r/wodby/varnish)
-[![Wodby Slack](http://slack.wodby.com/badge.svg)](http://slack.wodby.com)
+[![Docker Layers](https://images.microbadger.com/badges/image/wodby/varnish.svg)](https://microbadger.com/images/wodby/varnish)
 
 ## Docker Images
+
+!!! For better reliability we release images with stability tags (`wodby/varnish:4-X.X.X`) which correspond to [git tags](https://github.com/wodby/varnish/releases). We **STRONGLY RECOMMEND** using images only with stability tags. 
+
+Overview:
 
 * All images are based on Alpine Linux
 * Base image: [wodby/alpine](https://github.com/wodby/alpine)
@@ -15,8 +19,6 @@
 Supported tags and respective `Dockerfile` links:
 
 * `4`, `4.1`, `latest` [_(Dockerfile)_](https://github.com/wodby/varnish/tree/master/4/Dockerfile)
-
-For better reliability we additionally release images with stability tags (`wodby/varnish:4.1-X.X.X`) which correspond to [git tags](https://github.com/wodby/varnish/releases). We **strongly recommend** using images only with stability tags. 
 
 ## Environment Variables
 

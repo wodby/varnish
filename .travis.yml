@@ -5,19 +5,12 @@ services:
 
 env:
   global:
-    - DOCKER_COMPOSE_VERSION=1.10.0
     - LATEST_TAG=4.1
   matrix:
-    - MAJOR_VER=4 TAG=4.1
-
-install:
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
+    - VARNISH_VER=4.1.9 TAG=4.1 EXTRA_TAG=4
 
 script:
-  - cd ./"${MAJOR_VER}"
+  - cd ./"${VARNISH_VER:0:1}"
   - make && make test
 
 after_success: |
@@ -30,8 +23,8 @@ after_success: |
 
     make release
 
-    if [[ -z "${VARNISH_VER}" ]]; then
-      make release TAG="${MAJOR_VER}"
+    if [[ -n "${EXTRA_TAG}" ]]; then
+      make release TAG="${EXTRA_TAG}"
     fi
 
     if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
@@ -42,4 +35,5 @@ after_success: |
 notifications:
   on_failure: never
   slack:
-    secure: "jnIsjARKvmeTTlx/1KUwD282u7WMgqRnFxXD4VyTy6tgu9+tWLDQtZDao8TyUpFSF6xjMNuE59sASJAgdPa7a60KUlsQE+hmbPjqNLzY5yHKOJfjGrYqKLB3DmTxxmNzJmvt/xqCuip4rFtdqSFVaK6bj+4R9XL45vL5PaEYNF8i5j+NJUf+nejW1NlYY3dxyNYYQb95Nngvpn7E2Sie5Yr/GA35F5EIsbZMYkCDQbbKjtdq+QOrsjs3jyeTIvAQuVLg9Wx4067s7EXAevWsp2M0ol7xYkkN3+j8X4S0HrKp8RHm5JXvhRLmi2h4OVF6DHPZTCSPqqVM+PnDs+ycsnvDVO4rvefFGS+7FGnkL1CbNqD/rNLs2dulgCCQ8zljCHv9MIUBLfEMP8YAVWceRWjn1fYVYv7r+ErCJAVKcC5m9VuuJxhXdxNHemZ+TeIxZiqVJxPbkKWqG0nJUROfMEDhqWkJeK4CPV8XHSDSUolSDX73B3Fq2UHvCyFiZmW8dEU+EgIsOPVAnh+35I2PO8dCbvuHIwfyYK2H9tomN6Pg90n93dnKmagHEYGLnrMYtvJ6HeGWCNCVmPzpBHtC4yVS4PFgFURWnyZmkPz+mpHOHzW1fYLXuY5+Cw0Tz0qRZYQRNsxhDAVUhwy4NJR9Ah6SR6fTxaCE3KP9B+1+upw="
+    secure: |
+      jnIsjARKvmeTTlx/1KUwD282u7WMgqRnFxXD4VyTy6tgu9+tWLDQtZDao8TyUpFSF6xjMNuE59sASJAgdPa7a60KUlsQE+hmbPjqNLzY5yHKOJfjGrYqKLB3DmTxxmNzJmvt/xqCuip4rFtdqSFVaK6bj+4R9XL45vL5PaEYNF8i5j+NJUf+nejW1NlYY3dxyNYYQb95Nngvpn7E2Sie5Yr/GA35F5EIsbZMYkCDQbbKjtdq+QOrsjs3jyeTIvAQuVLg9Wx4067s7EXAevWsp2M0ol7xYkkN3+j8X4S0HrKp8RHm5JXvhRLmi2h4OVF6DHPZTCSPqqVM+PnDs+ycsnvDVO4rvefFGS+7FGnkL1CbNqD/rNLs2dulgCCQ8zljCHv9MIUBLfEMP8YAVWceRWjn1fYVYv7r+ErCJAVKcC5m9VuuJxhXdxNHemZ+TeIxZiqVJxPbkKWqG0nJUROfMEDhqWkJeK4CPV8XHSDSUolSDX73B3Fq2UHvCyFiZmW8dEU+EgIsOPVAnh+35I2PO8dCbvuHIwfyYK2H9tomN6Pg90n93dnKmagHEYGLnrMYtvJ6HeGWCNCVmPzpBHtC4yVS4PFgFURWnyZmkPz+mpHOHzW1fYLXuY5+Cw0Tz0qRZYQRNsxhDAVUhwy4NJR9Ah6SR6fTxaCE3KP9B+1+upw=
