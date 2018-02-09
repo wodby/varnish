@@ -10,27 +10,29 @@ env:
     - VARNISH_VER=4.1.9 TAG=4.1 EXTRA_TAG=4
 
 script:
-  - cd ./"${VARNISH_VER:0:1}"
-  - make && make test
+  - |
+    cd ./"${VARNISH_VER:0:1}"
 
-after_success: |
-  if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
-    docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
+    make
+    make test
 
-    if [[ -n "${TRAVIS_TAG}" ]]; then
-      export STABILITY_TAG="${TRAVIS_TAG}"
+    if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
+      docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
+
+      if [[ -n "${TRAVIS_TAG}" ]]; then
+        export STABILITY_TAG="${TRAVIS_TAG}"
+      fi
+
+      make release
+
+      if [[ -n "${EXTRA_TAG}" ]]; then
+        make release TAG="${EXTRA_TAG}"
+      fi
+
+      if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
+        make release TAG="latest"
+      fi
     fi
-
-    make release
-
-    if [[ -n "${EXTRA_TAG}" ]]; then
-      make release TAG="${EXTRA_TAG}"
-    fi
-
-    if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
-      make release TAG="latest"
-    fi
-  fi
 
 notifications:
   on_failure: never
