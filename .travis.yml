@@ -11,8 +11,7 @@ env:
 
 script:
   - cd ./"${VARNISH_VER:0:1}"
-  - make
-  - make test
+  - make && make test
 
 after_success:
   - ./travis-release.sh
