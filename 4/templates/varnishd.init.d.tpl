@@ -6,6 +6,14 @@ if [[ -n "${DEBUG}" ]]; then
     set -x
 fi
 
+{{ $alternative_storage := false }}
+{{ if getenv "VARNISHD_STORAGE_SIZE" }}
+  {{ $alternative_storage := (printf "file,/var/lib/varnish/storage.bin,%s" (getenv "VARNISHD_STORAGE_SIZE")) }}
+{{ else if getenv "VARNISHD_STORAGE_CUSTOM" }}
+  {{ $alternative_storage := (getenv "VARNISHD_STORAGE_CUSTOM") }}
+{{ end }}
+  
+
 exec varnishd \
     -j unix,user=varnish \
     -F \
@@ -14,7 +22,7 @@ exec varnishd \
     -f {{ getenv "VARNISHD_VCL_SCRIPT" "/etc/varnish/default.vcl" }} \
     -S {{ getenv "VARNISHD_SECRET_FILE" "/etc/varnish/secret" }} \
     -s main=malloc,{{ getenv "VARNISHD_MEMORY_SIZE" "64M" }} \
-    {{ if getenv "VARNISHD_STORAGE_SIZE" }}-s secondary=file,/var/lib/varnish/storage.bin,{{ getenv "VARNISHD_STORAGE_SIZE" }} {{ end }} \
+    {{ if $alternative_storage }} -s secondary={{ $alternative_storage }} {{ end }}\
     -t {{ getenv "VARNISHD_DEFAULT_TTL" "120" }} \
     -p ban_lurker_age={{ getenv "VARNISHD_PARAM_BAN_LURKER_AGE" "60.000" }} \
     -p ban_lurker_batch={{ getenv "VARNISHD_PARAM_BAN_LURKER_BATCH" "1000" }} \
