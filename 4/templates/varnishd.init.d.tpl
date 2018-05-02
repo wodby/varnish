@@ -9,8 +9,8 @@ fi
 {{ $alternative_storage := false }}
 {{ if getenv "VARNISHD_STORAGE_SIZE" }}
   {{ $alternative_storage := (printf "file,/var/lib/varnish/storage.bin,%s" (getenv "VARNISHD_STORAGE_SIZE")) }}
-{{ else if getenv "VARNISHD_STORAGE_CUSTOM" }}
-  {{ $alternative_storage := (getenv "VARNISHD_STORAGE_CUSTOM") }}
+{{ else if getenv "VARNISHD_SECONDARY_STORAGE" }}
+  {{ $alternative_storage := (getenv "VARNISHD_SECONDARY_STORAGE") }}
 {{ end }}
   
 
