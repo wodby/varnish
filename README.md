@@ -85,7 +85,7 @@ Supported tags and respective `Dockerfile` links:
 | `VARNISHD_PARAM_WORKSPACE_SESSION`         | `0.50k`                    |                                  |
 | `VARNISHD_PARAM_WORKSPACE_THREAD`          | `2k`                       |                                  |
 | `VARNISHD_SECRET_FILE`                     | `/etc/varnish/secret`      |                                  |
-| `VARNISHD_STORAGE_SIZE`                    |                            |                                  |
+| `VARNISHD_SECONDARY_STORAGE`               |                            |                                  |
 | `VARNISHD_VCL_SCRIPT`                      | `/etc/varnish/default.vcl` |                                  |
 
 ## Orchestration Actions
