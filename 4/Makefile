@@ -2,7 +2,7 @@ VARNISH_VER ?= 4.1.9
 VARNISH_VER_ALPINE ?= $(VARNISH_VER)-r0
 TAG ?= $(VARNISH_VER)
 
-REPO = wodby/varnish
+REPO = gcr.io/gengo-internal/varnish
 NAME = varnish-$(VARNISH_VER)
 
 ifneq ($(STABILITY_TAG),)
