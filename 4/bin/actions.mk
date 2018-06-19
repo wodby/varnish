@@ -13,7 +13,7 @@ flush:
 	varnishadm -T $(host):6082 -S /etc/varnish/secret "ban req.http.host ~ ."
 
 check-ready:
-	wait-for.sh "$(command)" $(service) $(host) $(max_try) $(wait_seconds) $(delay_seconds)
+	wait_for "$(command)" $(service) $(host) $(max_try) $(wait_seconds) $(delay_seconds)
 
 check-live:
 	@echo "OK"

@@ -1,4 +1,4 @@
-FROM wodby/alpine:3.6-1.2.0
+FROM wodby/alpine:3.6-2.0.1
 
 ARG VARNISH_VER
 ARG VARNISH_VER_ALPINE
@@ -18,7 +18,7 @@ EXPOSE 6081 6082
 VOLUME /var/lib/varnish
 
 COPY templates /etc/gotpl/
-COPY actions /usr/local/bin/
+COPY bin /usr/local/bin/
 COPY docker-entrypoint.sh /
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
