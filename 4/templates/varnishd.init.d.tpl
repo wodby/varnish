@@ -9,8 +9,8 @@ fi
 exec varnishd \
     -j unix,user=varnish \
     -F \
-    -a :6081 \
-    -T :6082 \
+    -a :{{ getenv "VARNISH_PORT" "6081" }} \
+    -T :{{ getenv "VARNISH_ADM_PORT" "6082" }} \
     -f {{ getenv "VARNISHD_VCL_SCRIPT" "/etc/varnish/default.vcl" }} \
     -S {{ getenv "VARNISHD_SECRET_FILE" "/etc/varnish/secret" }} \
     -s main=malloc,{{ getenv "VARNISHD_MEMORY_SIZE" "64M" }} \
