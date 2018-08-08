@@ -26,32 +26,29 @@ sub vcl_recv {
         set req.url = regsub(req.url, "\?$", "");
     }
 
-    # Strip query parameters from all urls (so they cache as a single object)
-    {{ if getenv "VARNISH_STRIP_QUERY_PARAMS" }}
-    if (req.url ~ "\?.*") {
-        set req.url = regsub(req.url, "\?.*", "");
-    }
-    {{ end }}
-
-    {{ if not (getenv "VARNISH_KEEP_ANALYTICS_COOKIES") }}
-    # Remove has_js and wooTracker cookies.
-    set req.http.Cookie = regsuball(req.http.Cookie, "(^|;\s*)(__[a-z]+|has_js|wooTracker)=[^;]*", "");
+    {{ if not (getenv "VARNISH_KEEP_ALL_COOKIES") }}
+    {{ $cookies := (getenv "VARNISH_STRIP_COOKIES" "__[a-z]+|has_js|wooTracker") }}
+    set req.http.Cookie = regsuball(req.http.Cookie, "(^|;\s*)({{ $cookies }})=[^;]*", "");
     set req.http.Cookie = regsub(req.http.Cookie, "^;\s*", "");
     if (req.http.Cookie ~ "^\s*$") {
         unset req.http.Cookie;
     }
     {{ end }}
 
-    {{ if not (getenv "VARNISH_KEEP_ANALYTICS_PARAMS") }}
-    # Some generic URL manipulation, useful for all templates that follow
-    # First remove the Google Analytics added parameters, useless for our backend
-    {{ $params := (getenv "VARNISH_ANALYTICS_PARAMS" "utm_source|utm_medium|utm_campaign|utm_content|gclid|cx|ie|cof|siteurl") }}
-
+    {{ if not (getenv "VARNISH_KEEP_ALL_PARAMS") }}
+    # Strip query parameters from all urls (so they cache as a single object).
+    {{ if getenv "VARNISH_STRIP_ALL_PARAMS" }}
+    if (req.url ~ "\?.*") {
+        set req.url = regsub(req.url, "\?.*", "");
+    }
+    {{ else }}
+    {{ $params := (getenv "VARNISH_STRIP_PARAMS" "utm_source|utm_medium|utm_campaign|utm_content|gclid|cx|ie|cof|siteurl") }}
     if (req.url ~ "(\?|&)({{ $params }})=") {
         set req.url = regsuball(req.url, "&({{ $params }})=([A-z0-9_\-\.%25]+)", "");
         set req.url = regsuball(req.url, "\?({{ $params }})=([A-z0-9_\-\.%25]+)", "?");
         set req.url = regsub(req.url, "\?&", "?");
         set req.url = regsub(req.url, "\?$", "");
     }
+    {{ end }}
     {{ end }}
 }

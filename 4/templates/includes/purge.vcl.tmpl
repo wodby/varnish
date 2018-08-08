@@ -35,41 +35,41 @@ sub vcl_recv {
             set req.http.X-VC-Purge-Key-Auth = "false";
         }
         # Allow unrestricted purge from internal network.
-        # TODO: use a better way to detect whether a request made from internal network.
-        if (req.http.X-Real-IP && req.http.X-VC-Purge-Key-Auth != "true") {
+        {{ if (getenv "VARNISH_PURGE_EXTERNAL_REQUEST_HEADER") }}
+        if (req.http.{{ getenv "VARNISH_PURGE_EXTERNAL_REQUEST_HEADER" }} && req.http.X-VC-Purge-Key-Auth != "true") {
+            return (synth(405, "Not allowed from " + client.ip));
+        }
+        {{ else }}
+        if (req.http.X-VC-Purge-Key-Auth != "true") {
             return (synth(405, "Not allowed from " + client.ip));
         }
         {{ end }}
+        {{ end }}
 
-        if (req.method == "BAN") {
-            if (req.http.Cache-Tags) {
-                ban("obj.http.Cache-Tags ~ " + req.http.Cache-Tags);
-            }
-            else {
-                return (synth(403, "Cache-Tags header missing."));
+        if (req.method == "BAN" && req.http.Cache-Tags) {
+            ban("obj.http.Cache-Tags ~ " + req.http.Cache-Tags);
+        }
+
+        if (req.http.X-VC-Purge-Method) {
+            if (req.http.X-VC-Purge-Method ~ "(?i)regex") {
+                call purge_regex;
+            } elsif (req.http.X-VC-Purge-Method ~ "(?i)exact") {
+                call purge_exact;
+            } else {
+                call purge_page;
             }
         } else {
-            if (req.http.X-VC-Purge-Method) {
-                if (req.http.X-VC-Purge-Method ~ "(?i)regex") {
-                    call purge_regex;
-                } elsif (req.http.X-VC-Purge-Method ~ "(?i)exact") {
-                    call purge_exact;
-                } else {
-                    call purge_page;
-                }
+            # No X-VC-Purge-Method header was specified.
+            # Do our best to figure out which one they want.
+            if (req.url ~ "\.\*" || req.url ~ "^\^" || req.url ~ "\$$" || req.url ~ "\\[.?*+^$|()]") {
+                call purge_regex;
+            } elsif (req.url ~ "\?") {
+                call purge_exact;
             } else {
-                # No X-VC-Purge-Method header was specified.
-                # Do our best to figure out which one they want.
-                if (req.url ~ "\.\*" || req.url ~ "^\^" || req.url ~ "\$$" || req.url ~ "\\[.?*+^$|()]") {
-                    call purge_regex;
-                } elsif (req.url ~ "\?") {
-                    call purge_exact;
-                } else {
-                    call purge_page;
-                }
+                call purge_page;
             }
-            return (synth(200,"Purged " + req.url + " " + req.http.host));
         }
+        return (synth(200,"Purged " + req.url + " " + req.http.host));
     }
     unset req.http.X-VC-My-Purge-Key;
     # unset Varnish Caching custom headers from client
