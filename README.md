@@ -158,9 +158,11 @@ Allows defining custom conditions for storing the cache object in the secondary 
 
 Please note that `VARNISHD_SECONDARY_STORAGE` must be defined as well, otherwise the secondary storage would not be available.
 
-**Example:** instruct varnish to store in the secondary storage from the backend via custom header `X-Cache-Bin`:
+Example: instruct varnish to store in the secondary storage from the backend via custom header `X-Cache-Bin`:
 
-`VARNISH_STORAGE_CONDITION='beresp.http.x-cache-bin = "secondary"'`
+```
+VARNISH_STORAGE_CONDITION='beresp.http.x-cache-bin = "secondary"'
+```
 
 ## Default behaviour
 
