@@ -8,6 +8,9 @@
 * [Docker images](#docker-images)
 * [Environment variables](#environment-variables)
 * [Default behaviour](#default-behaviour)
+    * [Caching rules](#caching-rules)
+    * [Flushing](#cache-flushing)
+    * [Miscellaneous](#miscellaneous)
 * [Config presets](#config-presets)
     * [Drupal](#drupal)
     * [WordPress](#wordpress)
@@ -175,9 +178,9 @@ VARNISH_STORAGE_CONDITION='beresp.http.x-cache-bin = "secondary"'
 * All AJAX requests not cached
 * Big files (larger than `$VARNISH_BIG_FILES_SIZE`) not cached
 
-### Purging and banning cache
+### Cache flushing
 
-* Purge and ban requests both use Varnish's `ban` method and restricted by the purge key `$VARNISH_PURGE_KEY` (generated if missing). Use header `X-VC-My-Purge-Key` to pass the key for purge/ban requests
+* Purge and ban requests both use Varnish's `ban` method to flush cache and restricted by the purge key `$VARNISH_PURGE_KEY` (generated if missing). Use header `X-VC-My-Purge-Key` to pass the key for purge/ban requests
 * Purge requests look up for exact match but ignores query params, you can change the method by setting `X-VC-Purge-Method` to `regex` or `exact` (respects query params)
 * Additionally for ban requests cache flushed by `Cache-Tags` header (Drupal's case)
 * if you want to allow unrestricted purge/ban requests in internal network specify a header via `$VARNISH_PURGE_EXTERNAL_REQUEST_HEADER` that exists only for external requests (e.g. `X-Real-IP`). If specified header is not set Varnish will skip purge key check
