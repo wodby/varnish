@@ -178,9 +178,9 @@ VARNISH_STORAGE_CONDITION='beresp.http.x-cache-bin = "secondary"'
 ### Purging and banning cache
 
 * Purge and ban requests both use Varnish's `ban` method and restricted by the purge key `$VARNISH_PURGE_KEY` (generated if missing). Use header `X-VC-My-Purge-Key` to pass the key for purge/ban requests
-* Purge requests look up for exact match but ignores query params, you can change the method by setting `X-VC-Purge-Method` to `regex` or `exact` (with query params)
-* Additionally, ban requests purge cache by `Cache-Tags` header if is set (Drupal's case)
-* You can enable unrestricted purge/ban requests for internal network by defining `$VARNISH_PURGE_EXTERNAL_REQUEST_HEADER`. If specified header is not set (e.g. `X-Real-IP`) Varnish will ignore the purge key
+* Purge requests look up for exact match but ignores query params, you can change the method by setting `X-VC-Purge-Method` to `regex` or `exact` (respects query params)
+* Additionally for ban requests cache flushed by `Cache-Tags` header (Drupal's case)
+* if you want to allow unrestricted purge/ban requests in internal network specify a header via `$VARNISH_PURGE_EXTERNAL_REQUEST_HEADER` that exists only for external requests (e.g. `X-Real-IP`). If specified header is not set Varnish will skip purge key check
 
 ### Miscellaneous
 
