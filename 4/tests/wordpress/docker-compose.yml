@@ -1,0 +1,13 @@
+version: "2"
+
+services:
+  nginx:
+    image: nginx:stable-alpine
+
+  varnish:
+    image: $IMAGE
+    depends_on:
+      - nginx
+    environment:
+      VARNISH_BACKEND_HOST: nginx
+      VARNISH_CONFIG_PRESET: wordpress

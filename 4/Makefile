@@ -21,7 +21,9 @@ build:
 		--build-arg VARNISH_VER_ALPINE=$(VARNISH_VER_ALPINE) ./
 
 test:
-	cd ./test && IMAGE=$(REPO):$(TAG) ./test.sh
+	cd ./tests/basic && IMAGE=$(REPO):$(TAG) ./run.sh
+	cd ./tests/drupal && IMAGE=$(REPO):$(TAG) ./run.sh
+	cd ./tests/wordpress && IMAGE=$(REPO):$(TAG) ./run.sh
 
 push:
 	docker push $(REPO):$(TAG)

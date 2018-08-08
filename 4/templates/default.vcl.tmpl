@@ -1,0 +1,27 @@
+vcl 4.0;
+
+include "includes/backend.vcl";
+
+import std;
+
+sub vcl_recv {
+    if (req.http.X-Forwarded-For) {
+        set req.http.X-Forwarded-For = req.http.X-Forwarded-For + ", " + client.ip;
+    } else {
+        set req.http.X-Forwarded-For = client.ip;
+    }
+}
+
+include "includes/purge.vcl";
+include "includes/static.vcl";
+include "includes/mobile.vcl";
+
+include "defaults/vcl_recv.vcl";
+
+include "preset.vcl";
+
+include "defaults/vcl_hash.vcl";
+include "defaults/vcl_pipe.vcl";
+include "defaults/vcl_backend_response.vcl";
+include "defaults/vcl_backend_error.vcl";
+include "defaults/vcl_deliver.vcl";

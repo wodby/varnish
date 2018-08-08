@@ -1,4 +1,4 @@
-FROM wodby/alpine:3.6-2.0.1
+FROM wodby/alpine:3.6-2.1.0
 
 ARG VARNISH_VER
 ARG VARNISH_VER_ALPINE
@@ -10,7 +10,9 @@ RUN apk --update --no-cache -t .varnish-rundeps add \
         pwgen \
         varnish="${VARNISH_VER_ALPINE}"; \
     \
-    # We don't use default init
+    touch /etc/varnish/preset.vcl; \
+    mkdir -p /etc/varnish/defaults /etc/varnish/includes; \
+    # We do not use default init
     echo "" > /etc/init.d/varnishd
 
 EXPOSE 6081 6082

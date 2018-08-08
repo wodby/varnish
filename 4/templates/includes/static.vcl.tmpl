@@ -1,0 +1,39 @@
+sub vcl_backend_response {
+    # Bypass cache for files > N MB
+    if (std.integer(beresp.http.Content-Length, 0) > {{ getenv "VARNISH_BIG_FILES_SIZE" "10485760" }}) {
+        set beresp.uncacheable = true;
+        set beresp.ttl = {{ getenv "VARNISH_BIG_FILES_TTL" "120s" }};
+        return (deliver);
+    }
+}
+
+{{ $static_files := (getenv "VARNISH_STATIC_FILES" "asc|doc|xls|ppt|csv|svg|jpg|jpeg|gif|png|ico|css|zip|tgz|gz|rar|bz2|pdf|txt|tar|wav|bmp|rtf|js|flv|swf|html|htm") }}
+
+sub vcl_recv {
+    if (req.url ~ "(?i)\.({{ $static_files }})(\?.*)?$") {
+        unset req.http.Cookie;
+        {{ if not (getenv "VARNISH_CACHE_STATIC_FILES") }}
+        # Do not use memory to cache static files.
+        return (pass);
+        {{ end }}
+        set req.url = regsub(req.url, "\?.*$", "");
+        # unset cookie only if no http auth
+        if (!req.http.Authorization) {
+            unset req.http.Cookie;
+        }
+        return(hash);
+    }
+}
+
+sub vcl_backend_response {
+    {{ if getenv "VARNISH_CACHE_STATIC_FILES" }}
+    if (bereq.url ~ "(?i)\.({{ $static_files }})(\?.*)?$") {
+        # Don't allow static files to set cookies.
+        unset beresp.http.set-cookie;
+        # Overwrite ttl with X-VC-TTL
+        set beresp.http.X-VC-TTL = {{ getenv "VARNISH_STATIC_TTL" "86400" }};
+        set beresp.ttl = std.duration(beresp.http.X-VC-TTL + "s", 0s);
+        set beresp.http.X-VC-Cacheable = "YES:Is cacheable, ttl: " + beresp.ttl;
+    }
+    {{ end }}
+}

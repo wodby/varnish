@@ -1,0 +1,28 @@
+sub vcl_recv {
+    {{ if getenv "VARNISH_WP_ADMIN_SUBDOMAIN" }}
+    if (req.http.host ~ "{{getenv "VARNISH_WP_ADMIN_SUBDOMAIN" }}") {
+        set req.http.X-VC-Cacheable = "NO:Admin domain";
+        return(pass);
+    }
+    {{ end }}
+
+    # Do not cache logged-in users. you can set users `logged in cookie` name in settings
+    if (req.http.Cookie ~ "wordpress_logged_in_") {
+        set req.http.X-VC-Cacheable = "NO:Found logged in cookie";
+        return(pass);
+    }
+
+    # Pass through some requests that are specifically for the WordPress Jetpack mobile plugin.
+    if (req.url ~ "\?(.*&)?(ak_action|app-download)=") {
+        return(pass);
+    }
+
+    if (req.http.Cookie ~ "(^|;\s*)akm_mobile=") {
+        return(pass);
+    }
+
+    # Remove replytocom= param.
+    set req.url = regsub(req.url, "\?replytocom=.*$", "");
+
+    return(hash);
+}

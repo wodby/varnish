@@ -1,0 +1,17 @@
+{{ $mobile := (getenv "VARNISH_MOBILE_USER_AGENT" "ipod|android|blackberry|phone|mobile|kindle|silk|fennec|tablet|webos|palm|windows ce|nokia|philips|samsung|sanyo|sony|panasonic|ericsson|alcatel|series60|series40|opera mini|opera mobi|au-mic|audiovox|avantgo|blazer|danger|docomo|epoc|ericy|i-mode|ipaq|midp-|mot-|netfront|nitro|pocket|portalmmm|rover|sie-|symbian|cldc-|j2me|up\\.browser|up\\.link|vodafone|wap1\\.|wap2\\.") }}
+
+{{ if getenv "VARNISH_MOBILE_SEPARATE_CASH" }}
+sub vcl_hash {
+    if (req.http.User-Agent ~ "(?i){{ $mobile }}") {
+        hash_data("mobile");
+    }
+}
+{{ end }}
+
+{{ if getenv "VARNISH_MOBILE_DISABLE_CASH" }}
+sub vcl_recv {
+    if (req.http.User-Agent ~ "(?i){{ $mobile }}") {
+        return(pass);
+    }
+}
+{{ end }}
