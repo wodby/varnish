@@ -191,8 +191,8 @@ VARNISH_STORAGE_CONDITION='beresp.http.x-cache-bin = "secondary"'
 * Query params (`$VARNISH_STRIP_PARAMS`) stripped unless `$VARNISH_KEEP_ALL_PARAMS` is set
 * Cookies (`$VARNISH_STRIP_COOKIES`) stripped unless `$VARNISH_KEEP_ALL_COOKIES` is set
 * Hashes and trailing `?` stripped from URL before passing to backend
-* Cache for mobile devices can be separated by setting `$VARNISH_MOBILE_SEPARATE_CASH` or completely disabled via `$VARNISH_MOBILE_DISABLE_CASH`. User agent regex `$VARNISH_MOBILE_USER_AGENT` used to identify the mobile devices
-* Set one of the following headers from backend to disable caching: 
+* By default cache mobile devices is identical. You can separate it by setting `$VARNISH_MOBILE_SEPARATE_CASH` or completely disable by setting `$VARNISH_MOBILE_DISABLE_CASH`. Regex `$VARNISH_MOBILE_USER_AGENT` used to identify mobile devices by `User-Agent` header 
+* Set one of the following headers from backend to disable caching for a page: 
     ```
     X-VC-Cacheable: NO
     Cache-control: private
