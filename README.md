@@ -120,7 +120,7 @@ Supported tags and respective `Dockerfile` links:
 | `VARNISHD_SECRET_FILE`                     | `/etc/varnish/secret`      |                                    |
 | `VARNISHD_VCL_SCRIPT`                      | `/etc/varnish/default.vcl` |                                    |
 
-#### `VARNISH_MOBILE_USER_AGENT`:
+###### `VARNISH_MOBILE_USER_AGENT`:
 
 Backslashes must be escaped as `\\`
 
@@ -128,19 +128,19 @@ Backslashes must be escaped as `\\`
 ipod|android|blackberry|phone|mobile|kindle|silk|fennec|tablet|webos|palm|windows ce|nokia|philips|samsung|sanyo|sony|panasonic|ericsson|alcatel|series60|series40|opera mini|opera mobi|au-mic|audiovox|avantgo|blazer|danger|docomo|epoc|ericy|i-mode|ipaq|midp-|mot-|netfront|nitro|pocket|portalmmm|rover|sie-|symbian|cldc-|j2me|up\\.browser|up\\.link|vodafone|wap1\\.|wap2\\.
 ```
 
-#### `VARNISH_STATIC_FILES`:
+###### `VARNISH_STATIC_FILES`:
 
 ```
 asc|doc|xls|ppt|csv|svg|jpg|jpeg|gif|png|ico|css|zip|tgz|gz|rar|bz2|pdf|txt|tar|wav|bmp|rtf|js|flv|swf|html|htm
 ```
 
-#### `VARNISH_ANALYTICS_PARAMS`
+###### `VARNISH_ANALYTICS_PARAMS`
 
 ```
 utm_source|utm_medium|utm_campaign|utm_content|gclid|cx|ie|cof|siteurl
 ```
 
-#### `VARNISH_SECONDARY_STORAGE_CONDITION`:
+###### `VARNISH_SECONDARY_STORAGE_CONDITION`:
 
 Allows defining custom conditions for storing the cache object in the secondary storage; as it is injected into an `if` it has to contain valid VCL syntax for it.
 
@@ -197,7 +197,7 @@ Specific behaviour:
 
 Additional environment variables for Drupal preset:
 
-#### `VARNISH_DRUPAL_EXCLUDE_URLS`:
+###### `VARNISH_DRUPAL_EXCLUDE_URLS`:
 
 Backslashes must be escaped as `\\`
 
@@ -205,7 +205,7 @@ Backslashes must be escaped as `\\`
 ^(/update\\.php|/([a-z]{2}/)?admin|/([a-z]{2}/)?admin/.*|/([a-z]{2}/)?system/files/.*|/([a-z]{2}/)?flag/.*|.*/ajax/.*|.*/ahah/.*)$
 ```
 
-#### `VARNISH_DRUPAL_PRESERVED_COOKIES`:
+###### `VARNISH_DRUPAL_PRESERVED_COOKIES`:
 
 ```
 SESS[a-z0-9]+|SSESS[a-z0-9]+|NO_CACHE
