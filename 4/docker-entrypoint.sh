@@ -38,7 +38,7 @@ init_varnish_secret() {
         echo "Generated Varnish secret: ${VARNISH_SECRET}"
     fi
 
-    echo -e "${VARNISH_SECRET}\n" > /etc/varnish/secret
+    echo -e "${VARNISH_SECRET}" > /etc/varnish/secret
 }
 
 init_purge_key() {
