@@ -19,7 +19,7 @@ sub vcl_pipe {
     }
 
     {{ if getenv "VARNISH_PIPE_CLOSE_CONNECTION" }}
-    # set bereq.http.Connection = "Close";
+    set bereq.http.Connection = "Close";
     {{ end }}
 
     return (pipe);
