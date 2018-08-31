@@ -247,13 +247,12 @@ Add `VARNISH_CONFIG_PRESET=wordpress` to use this preset.
 make COMMAND [params ...]
 
 commands:
-    check-ready [host port max_try wait_seconds delay_seconds]
-    flush [host port_adm]
+    check-ready [host max_try wait_seconds delay_seconds]
+    flush [host]
  
 default params values:
-    host localhost
-    port 6081
-    port_adm 6082
+    port 6082
+    host localhost:$(port)
     max_try 1
     wait_seconds 1
     delay_seconds 0
