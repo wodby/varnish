@@ -1,14 +1,13 @@
 FROM wodby/alpine:3.6-2.1.0
 
 ARG VARNISH_VER
-ARG VARNISH_VER_ALPINE
 
 ENV VARNISH_VER="${VARNISH_VER}"
 
 RUN apk --update --no-cache -t .varnish-rundeps add \
         make \
         pwgen \
-        varnish="${VARNISH_VER_ALPINE}"; \
+        "varnish~${VARNISH_VER}"; \
     \
     touch /etc/varnish/preset.vcl; \
     mkdir -p /etc/varnish/defaults /etc/varnish/includes; \
