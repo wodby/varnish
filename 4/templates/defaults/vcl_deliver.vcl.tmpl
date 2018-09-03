@@ -22,7 +22,6 @@ sub vcl_deliver {
         }
     } else {
         unset resp.http.X-VC-Enabled;
-        unset resp.http.X-VC-Cache;
         unset resp.http.X-VC-Debug;
         unset resp.http.X-VC-DebugMessage;
         unset resp.http.X-VC-Cacheable;
