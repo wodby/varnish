@@ -3,9 +3,8 @@
 max_try ?= 1
 wait_seconds ?= 1
 delay_seconds ?= 0
-port ?= 6082
-host ?= localhost:$(port)
-command = varnishadm -T ${host} -S /etc/varnish/secret 'status' | grep -q 'Child in state running'
+host ?= localhost
+command = varnishadm -T ${host}:6082 -S /etc/varnish/secret 'status' | grep -q 'Child in state running'
 service = Varnish
 
 default: check-ready

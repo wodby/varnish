@@ -251,8 +251,7 @@ commands:
     flush [host]
  
 default params values:
-    port 6082
-    host localhost:$(port)
+    host localhost
     max_try 1
     wait_seconds 1
     delay_seconds 0
