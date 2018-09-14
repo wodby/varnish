@@ -1,4 +1,4 @@
-FROM wodby/alpine:3.6-2.1.0
+FROM wodby/alpine:3.6-2.1.1
 
 ARG VARNISH_VER
 ARG VARNISH_VER_ALPINE
