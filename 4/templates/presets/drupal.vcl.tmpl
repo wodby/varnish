@@ -6,7 +6,7 @@ sub vcl_recv {
         return (pass);
     }
 
-    if (req.url ~ "(^/batch)") {
+    if (req.url ~ "(^/([a-z]{2}/)?batch)") {
         return (pipe);
     }
 
