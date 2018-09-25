@@ -6,6 +6,10 @@ sub vcl_recv {
         return (pass);
     }
 
+    if (req.url ~ "(^/batch)") {
+        return (pipe);
+    }
+
     # Remove all cookies that Drupal doesn't need to know about. We explicitly
     # list the ones that Drupal does need, the SESS and NO_CACHE. If, after
     # running this code we find that either of these two cookies remains, we
