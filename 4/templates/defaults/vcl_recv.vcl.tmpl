@@ -27,7 +27,7 @@ sub vcl_recv {
     }
 
     {{ if not (getenv "VARNISH_KEEP_ALL_COOKIES") }}
-    {{ $cookies := (getenv "VARNISH_STRIP_COOKIES" "__[a-z]+|has_js|wooTracker") }}
+    {{ $cookies := (getenv "VARNISH_STRIP_COOKIES" "__[a-z]+|wooTracker") }}
     set req.http.Cookie = regsuball(req.http.Cookie, "(^|;\s*)({{ $cookies }})=[^;]*", "");
     set req.http.Cookie = regsub(req.http.Cookie, "^;\s*", "");
     if (req.http.Cookie ~ "^\s*$") {

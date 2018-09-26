@@ -144,7 +144,7 @@ asc|doc|xls|ppt|csv|svg|jpg|jpeg|gif|png|ico|css|zip|tgz|gz|rar|bz2|pdf|txt|tar|
 Ignored if `$VARNISH_KEEP_ALL_COOKIES` is set
 
 ```
-__[a-z]+|has_js|wooTracker
+__[a-z]+|wooTracker
 ```
 
 ###### `VARNISH_STRIP_PARAMS`
