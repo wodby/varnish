@@ -15,7 +15,7 @@ sub vcl_recv {
     # running this code we find that either of these two cookies remains, we
     # will pass as the page cannot be cached.
     if (req.http.Cookie) {
-        {{ $preserved_cookies := (getenv "VARNISH_DRUPAL_PRESERVED_COOKIES" "SESS[a-z0-9]+|SSESS[a-z0-9]+|NO_CACHE") }}
+        {{ $preserved_cookies := (getenv "VARNISH_DRUPAL_PRESERVED_COOKIES" "SESS[a-z0-9]+|SSESS[a-z0-9]+|NO_CACHE|has_js") }}
 
         # 1. Append a semi-colon to the front of the cookie string.
         # 2. Remove all spaces that appear after semi-colons.
