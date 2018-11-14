@@ -152,7 +152,7 @@ __[a-z]+|wooTracker
 Ignored if `$VARNISH_KEEP_ALL_PARAMS` is set
 
 ```
-utm_source|utm_medium|utm_campaign|utm_content|gclid|cx|ie|cof|siteurl
+utm_source|utm_medium|utm_campaign|utm_content|gclid|cx|ie|cof|siteurl|fclid
 ```
 
 ###### `VARNISH_SECONDARY_STORAGE_CONDITION`:
