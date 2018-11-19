@@ -42,7 +42,7 @@ sub vcl_recv {
         set req.url = regsub(req.url, "\?.*", "");
     }
     {{ else }}
-    {{ $params := (getenv "VARNISH_STRIP_PARAMS" "utm_source|utm_medium|utm_campaign|utm_content|gclid|cx|ie|cof|siteurl|fclid") }}
+    {{ $params := (getenv "VARNISH_STRIP_PARAMS" "utm_[a-z]+|gclid|cx|ie|cof|siteurl|fbclid") }}
     if (req.url ~ "(\?|&)({{ $params }})=") {
         set req.url = regsuball(req.url, "&({{ $params }})=([A-z0-9_\-\.%25]+)", "");
         set req.url = regsuball(req.url, "\?({{ $params }})=([A-z0-9_\-\.%25]+)", "?");
