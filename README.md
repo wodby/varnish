@@ -7,6 +7,7 @@
 
 * [Docker images](#docker-images)
 * [Environment variables](#environment-variables)
+* [Installed modules](#installed-modules)
 * [Default behaviour](#default-behaviour)
     * [Caching rules](#caching-rules)
     * [Flushing](#cache-flushing)
@@ -19,7 +20,7 @@
 
 ## Docker Images
 
-❗For better reliability we release images with stability tags (`wodby/varnish:4-X.X.X`) which correspond to [git tags](https://github.com/wodby/varnish/releases). We strongly recommend using images only with stability tags. 
+❗For better reliability we release images with stability tags (`wodby/varnish:6-X.X.X`) which correspond to [git tags](https://github.com/wodby/varnish/releases). We strongly recommend using images only with stability tags. 
 
 Overview:
 
@@ -30,7 +31,8 @@ Overview:
 
 Supported tags and respective `Dockerfile` links:
 
-* `4.1`, `4`, `latest` [_(Dockerfile)_](https://github.com/wodby/varnish/tree/master/4/Dockerfile)
+* `6.0`, `6`, `latest` [_(Dockerfile)_](https://github.com/wodby/varnish/tree/master/Dockerfile)
+* `4.1`, `4` [_(Dockerfile)_](https://github.com/wodby/varnish/tree/master/Dockerfile)
 
 ## Environment Variables
 
@@ -52,6 +54,7 @@ Supported tags and respective `Dockerfile` links:
 | `VARNISH_PURGE_EXTERNAL_REQUEST_HEADER`    |                            |                                              |
 | `VARNISH_KEEP_ALL_COOKIES`                 |                            |                                              |
 | `VARNISH_KEEP_ALL_PARAMS`                  |                            |                                              |
+| `VARNISH_IMPORT_MODULES`                   |                            | Separated by comma                           |
 | `VARNISH_MOBILE_DISABLE_CASH`              |                            |                                              |
 | `VARNISH_MOBILE_SEPARATE_CASH`             |                            |                                              |
 | `VARNISH_MOBILE_USER_AGENT`                |                            | See default value below                      |
@@ -97,7 +100,6 @@ Supported tags and respective `Dockerfile` links:
 | `VARNISHD_PARAM_PREFER_IPV6`               | `off`                      |                                              |
 | `VARNISHD_PARAM_RUSH_EXPONENT`             | `3`                        |                                              |
 | `VARNISHD_PARAM_SEND_TIMEOUT`              | `600`                      |                                              |
-| `VARNISHD_PARAM_SESSION_MAX`               | `100000`                   |                                              |
 | `VARNISHD_PARAM_SHORTLIVED`                | `10.000`                   |                                              |
 | `VARNISHD_PARAM_TCP_KEEPALIVE_INTVL`       | `75.000`                   |                                              |
 | `VARNISHD_PARAM_TCP_KEEPALIVE_PROBES`      | `8`                        |                                              |
@@ -166,6 +168,15 @@ Example: instruct varnish to store in the secondary storage from the backend via
 ```
 VARNISH_STORAGE_CONDITION='beresp.http.x-cache-bin = "secondary"'
 ```
+
+## Installed modules
+
+| Module | Version | Imported |
+| ------ | ------- | -------- |
+| [geoip](https://github.com/varnish/libvmod-geoip) | 1.0.3 | ✓ | 
+| [Set: cookie, vsthrottle, header, saintmode, softpurge, tcp, var, xkey, bodyaccess](https://github.com/varnish/varnish-modules) | latest | |
+
+Modules can be imported as `$VARNISH_IMPORT_MODULES=cookie,header`.
 
 ## Default behaviour
 

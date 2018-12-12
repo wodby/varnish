@@ -16,8 +16,10 @@ echo -n "Running flush action... "
 docker-compose exec varnish make flush -f /usr/local/bin/actions.mk
 echo "OK"
 
-echo -n "Checking varnish backend response... "
-docker-compose exec varnish curl -s "localhost:6081" | grep -q 'Welcome to nginx!'
+docker-compose exec php sh -c 'echo "<?php var_dump(\$_SERVER[\"HTTP_X_COUNTRY_CODE\"]);" > /var/www/html/index.php'
+
+echo -n "Checking varnish backend response containing a country code header detected via geoip module... "
+docker-compose exec varnish curl --header "X-Forwarded-For: 185.229.59.42" -s "localhost:6081" | grep -q "US"
 echo "OK"
 
 docker-compose down
