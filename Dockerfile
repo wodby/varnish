@@ -136,7 +136,7 @@ RUN set -ex; \
 		/var/log/varnish \
 		/var/lib/varnish; \
     \
-	 install -d -o root -g varnish -m750 \
+    install -d -o root -g varnish -m750 \
 	    /etc/varnish \
 	    /etc/varnish/defaults \
 	    /etc/varnish/includes; \
