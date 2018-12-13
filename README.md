@@ -15,6 +15,7 @@
 * [Config presets](#config-presets)
     * [Drupal](#drupal)
     * [WordPress](#wordpress)
+* [Currencies](#currencies)    
 * [Orchestration actions](#orchestration-actions)    
 * [Deployment](#deployment)    
 
@@ -36,96 +37,100 @@ Supported tags and respective `Dockerfile` links:
 
 ## Environment Variables
 
-| Variable                                   | Default Value              | Description                                  |
-| ------------------------------------------ | -------------------------- | ----------------------------------           |
-| `VARNISH_ALLOW_UNRESTRICTED_PURGE`         |                            | Used for ban requests as well                |
-| `VARNISH_BACKEND_BETWEEN_BYTES_TIMEOUT`    | `60s`                      |                                              |
-| `VARNISH_BACKEND_CONNECT_TIMEOUT`          | `3.5s`                     |                                              |
-| `VARNISH_BACKEND_FIRST_BYTE_TIMEOUT`       | `60s`                      |                                              |
-| `VARNISH_BACKEND_GRACE`                    | `2m`                       |                                              |
-| `VARNISH_BACKEND_HOST`                     |                            | Mandatory                                    |
-| `VARNISH_BACKEND_PORT`                     | `80`                       |                                              |
-| `VARNISH_BIG_FILES_SIZE`                   | `10485760`                 | 10MB                                         |
-| `VARNISH_BIG_FILES_TTL`                    | `120s`                     |                                              |
-| `VARNISH_CACHE_STATIC_FILES`               |                            |                                              |
-| `VARNISH_CONFIG_PRESET`                    |                            |                                              |
-| `VARNISH_DEFAULT_TTL`                      | `120s`                     |                                              |
-| `VARNISH_ERRORS_GRACE`                     | `15s`                      |                                              |
-| `VARNISH_PURGE_EXTERNAL_REQUEST_HEADER`    |                            |                                              |
-| `VARNISH_KEEP_ALL_COOKIES`                 |                            |                                              |
-| `VARNISH_KEEP_ALL_PARAMS`                  |                            |                                              |
-| `VARNISH_IMPORT_MODULES`                   |                            | Separated by comma                           |
-| `VARNISH_MOBILE_DISABLE_CASH`              |                            |                                              |
-| `VARNISH_MOBILE_SEPARATE_CASH`             |                            |                                              |
-| `VARNISH_MOBILE_USER_AGENT`                |                            | See default value below                      |
-| `VARNISH_PIPE_CLOSE_CONNECTION`            |                            |                                              |
-| `VARNISH_PURGE_KEY`                        |                            | Randomly generated if missing                |
-| `VARNISH_SECONDARY_STORAGE_CONDITION`      |                            | Must be valid VCL                            |
-| `VARNISH_SECRET`                           |                            | Generated automatically if missing           |
-| `VARNISH_STATIC_FILES`                     |                            | See default value below                      |
-| `VARNISH_STATIC_TTL`                       | `86400`                    | In seconds                                   |
-| `VARNISH_STRIP_COOKIES`                    |                            | See default value below                      |
-| `VARNISH_STRIP_PARAMS`                     |                            | See default value below                      |
-| `VARNISH_STRIP_ALL_PARAMS`                 |                            | Ignored if `$VARNISH_KEEP_ALL_PARAMS` is set |
-| `VARNISHD_DEFAULT_TTL`                     | `120`                      |                                              |
-| `VARNISHD_MEMORY_SIZE`                     | `64m`                      |                                              |
-| `VARNISHD_PARAM_BAN_LURKER_AGE`            | `60.000`                   |                                              |
-| `VARNISHD_PARAM_BAN_LURKER_BATCH`          | `1000`                     |                                              |
-| `VARNISHD_PARAM_BAN_LURKER_SLEEP`          | `0.010`                    |                                              |
-| `VARNISHD_PARAM_BETWEEN_BYTES_TIMEOUT`     | `60.000`                   |                                              |
-| `VARNISHD_PARAM_CONNECT_TIMEOUT`           | `3.500`                    |                                              |
-| `VARNISHD_PARAM_DEFAULT_GRACE`             | `10.000`                   |                                              |
-| `VARNISHD_PARAM_DEFAULT_KEEP`              | `0.000`                    |                                              |
-| `VARNISHD_PARAM_DEFAULT_TTL`               | `120.000`                  |                                              |
-| `VARNISHD_PARAM_FETCH_CHUNKSIZE`           | `16k`                      |                                              |
-| `VARNISHD_PARAM_FIRST_BYTE_TIMEOUT`        | `60.000`                   |                                              |
-| `VARNISHD_PARAM_GZIP_BUFFER`               | `32k`                      |                                              |
-| `VARNISHD_PARAM_GZIP_LEVEL`                | `6`                        |                                              |
-| `VARNISHD_PARAM_GZIP_MEMLEVEL`             | `8`                        |                                              |
-| `VARNISHD_PARAM_HTTP_GZIP_SUPPORT`         | `on`                       |                                              |
-| `VARNISHD_PARAM_HTTP_MAX_HDR`              | `64`                       |                                              |
-| `VARNISHD_PARAM_HTTP_REQ_HDR_LEN`          | `8k`                       |                                              |
-| `VARNISHD_PARAM_HTTP_REQ_SIZE`             | `32k`                      |                                              |
-| `VARNISHD_PARAM_HTTP_RESP_HDR_LEN`         | `8k`                       |                                              |
-| `VARNISHD_PARAM_HTTP_RESP_SIZE`            | `32k`                      |                                              |
-| `VARNISHD_PARAM_IDLE_SEND_TIMEOUT`         | `60.000`                   |                                              |
-| `VARNISHD_PARAM_MAX_ESI_DEPTH`             | `5`                        |                                              |
-| `VARNISHD_PARAM_MAX_RESTARTS`              | `4`                        |                                              |
-| `VARNISHD_PARAM_MAX_RETRIES`               | `4`                        |                                              |
-| `VARNISHD_PARAM_NUKE_LIMIT`                | `50`                       |                                              |
-| `VARNISHD_PARAM_PING_INTERVAL`             | `3`                        |                                              |
-| `VARNISHD_PARAM_PIPE_TIMEOUT`              | `60.000`                   |                                              |
-| `VARNISHD_PARAM_POOL_REQ`                  | `10,100,10`                |                                              |
-| `VARNISHD_PARAM_POOL_SESS`                 | `10,100,10`                |                                              |
-| `VARNISHD_PARAM_PREFER_IPV6`               | `off`                      |                                              |
-| `VARNISHD_PARAM_RUSH_EXPONENT`             | `3`                        |                                              |
-| `VARNISHD_PARAM_SEND_TIMEOUT`              | `600`                      |                                              |
-| `VARNISHD_PARAM_SHORTLIVED`                | `10.000`                   |                                              |
-| `VARNISHD_PARAM_TCP_KEEPALIVE_INTVL`       | `75.000`                   |                                              |
-| `VARNISHD_PARAM_TCP_KEEPALIVE_PROBES`      | `8`                        |                                              |
-| `VARNISHD_PARAM_TCP_KEEPALIVE_TIME`        | `7200.000`                 |                                              |
-| `VARNISHD_PARAM_THREAD_POOL_ADD_DELAY`     | `0.000`                    |                                              |
-| `VARNISHD_PARAM_THREAD_POOL_DESTROY_DELAY` | `1.000`                    |                                              |
-| `VARNISHD_PARAM_THREAD_POOL_FAIL_DELAY`    | `0.200`                    |                                              |
-| `VARNISHD_PARAM_THREAD_POOL_MAX`           | `5000`                     |                                              |
-| `VARNISHD_PARAM_THREAD_POOL_MIN`           | `100`                      |                                              |
-| `VARNISHD_PARAM_THREAD_POOL_STACK`         | `48k`                      |                                              |
-| `VARNISHD_PARAM_THREAD_POOL_TIMEOUT`       | `300.000`                  |                                              |
-| `VARNISHD_PARAM_THREAD_POOLS`              | `2`                        |                                              |
-| `VARNISHD_PARAM_THREAD_QUEUE_LIMIT`        | `20`                       |                                              |
-| `VARNISHD_PARAM_TIMEOUT_IDLE`              | `5.000`                    |                                              |
-| `VARNISHD_PARAM_TIMEOUT_LINGER`            | `0.050`                    |                                              |
-| `VARNISHD_PARAM_VSL_BUFFER`                | `4k`                       |                                              |
-| `VARNISHD_PARAM_VSL_RECLEN`                | `255b`                     |                                              |
-| `VARNISHD_PARAM_VSL_SPACE`                 | `80M`                      |                                              |
-| `VARNISHD_PARAM_VSM_SPACE`                 | `1M`                       |                                              |
-| `VARNISHD_PARAM_WORKSPACE_BACKEND`         | `64k`                      |                                              |
-| `VARNISHD_PARAM_WORKSPACE_CLIENT`          | `64k`                      |                                              |
-| `VARNISHD_PARAM_WORKSPACE_SESSION`         | `0.50k`                    |                                              |
-| `VARNISHD_PARAM_WORKSPACE_THREAD`          | `2k`                       |                                              |
-| `VARNISHD_SECONDARY_STORAGE`               |                            | See example below                            |
-| `VARNISHD_SECRET_FILE`                     | `/etc/varnish/secret`      |                                              |
-| `VARNISHD_VCL_SCRIPT`                      | `/etc/varnish/default.vcl` |                                              |
+| Variable                                   | Default Value              | Description                                      |
+| ------------------------------------------ | -------------------------- | ----------------------------------               |
+| `VARNISH_ALLOW_UNRESTRICTED_PURGE`         |                            | Used for ban requests as well                    |
+| `VARNISH_BACKEND_BETWEEN_BYTES_TIMEOUT`    | `60s`                      |                                                  |
+| `VARNISH_BACKEND_CONNECT_TIMEOUT`          | `3.5s`                     |                                                  |
+| `VARNISH_BACKEND_FIRST_BYTE_TIMEOUT`       | `60s`                      |                                                  |
+| `VARNISH_BACKEND_GRACE`                    | `2m`                       |                                                  |
+| `VARNISH_BACKEND_HOST`                     |                            | Mandatory                                        |
+| `VARNISH_BACKEND_PORT`                     | `80`                       |                                                  |
+| `VARNISH_CACHE_PER_COUNTRY`                |                            | Separate caches based on country code            |
+| `VARNISH_CACHE_PER_CURRENCY`               |                            | Separate caches based on [currency](#currencies) |
+| `VARNISH_CURRENCY_EUR_COUNTRY_CODES`       |                            | See [currencies](#currencies)                    |
+| `VARNISH_CURRENCY_USD_COUNTRY_CODES`       |                            | See [currencies](#currencies)                    |
+| `VARNISH_BIG_FILES_SIZE`                   | `10485760`                 | 10MB                                             |
+| `VARNISH_BIG_FILES_TTL`                    | `120s`                     |                                                  |
+| `VARNISH_CACHE_STATIC_FILES`               |                            |                                                  |
+| `VARNISH_CONFIG_PRESET`                    |                            |                                                  |
+| `VARNISH_DEFAULT_TTL`                      | `120s`                     |                                                  |
+| `VARNISH_ERRORS_GRACE`                     | `15s`                      |                                                  |
+| `VARNISH_PURGE_EXTERNAL_REQUEST_HEADER`    |                            |                                                  |
+| `VARNISH_KEEP_ALL_COOKIES`                 |                            |                                                  |
+| `VARNISH_KEEP_ALL_PARAMS`                  |                            |                                                  |
+| `VARNISH_IMPORT_MODULES`                   |                            | Separated by comma                               |
+| `VARNISH_MOBILE_DISABLE_CASH`              |                            |                                                  |
+| `VARNISH_MOBILE_SEPARATE_CASH`             |                            |                                                  |
+| `VARNISH_MOBILE_USER_AGENT`                |                            | See default value below                          |
+| `VARNISH_PIPE_CLOSE_CONNECTION`            |                            |                                                  |
+| `VARNISH_PURGE_KEY`                        |                            | Randomly generated if missing                    |
+| `VARNISH_SECONDARY_STORAGE_CONDITION`      |                            | Must be valid VCL                                |
+| `VARNISH_SECRET`                           |                            | Generated automatically if missing               |
+| `VARNISH_STATIC_FILES`                     |                            | See default value below                          |
+| `VARNISH_STATIC_TTL`                       | `86400`                    | In seconds                                       |
+| `VARNISH_STRIP_COOKIES`                    |                            | See default value below                          |
+| `VARNISH_STRIP_PARAMS`                     |                            | See default value below                          |
+| `VARNISH_STRIP_ALL_PARAMS`                 |                            | Ignored if `$VARNISH_KEEP_ALL_PARAMS` is set     |
+| `VARNISHD_DEFAULT_TTL`                     | `120`                      |                                                  |
+| `VARNISHD_MEMORY_SIZE`                     | `64m`                      |                                                  |
+| `VARNISHD_PARAM_BAN_LURKER_AGE`            | `60.000`                   |                                                  |
+| `VARNISHD_PARAM_BAN_LURKER_BATCH`          | `1000`                     |                                                  |
+| `VARNISHD_PARAM_BAN_LURKER_SLEEP`          | `0.010`                    |                                                  |
+| `VARNISHD_PARAM_BETWEEN_BYTES_TIMEOUT`     | `60.000`                   |                                                  |
+| `VARNISHD_PARAM_CONNECT_TIMEOUT`           | `3.500`                    |                                                  |
+| `VARNISHD_PARAM_DEFAULT_GRACE`             | `10.000`                   |                                                  |
+| `VARNISHD_PARAM_DEFAULT_KEEP`              | `0.000`                    |                                                  |
+| `VARNISHD_PARAM_DEFAULT_TTL`               | `120.000`                  |                                                  |
+| `VARNISHD_PARAM_FETCH_CHUNKSIZE`           | `16k`                      |                                                  |
+| `VARNISHD_PARAM_FIRST_BYTE_TIMEOUT`        | `60.000`                   |                                                  |
+| `VARNISHD_PARAM_GZIP_BUFFER`               | `32k`                      |                                                  |
+| `VARNISHD_PARAM_GZIP_LEVEL`                | `6`                        |                                                  |
+| `VARNISHD_PARAM_GZIP_MEMLEVEL`             | `8`                        |                                                  |
+| `VARNISHD_PARAM_HTTP_GZIP_SUPPORT`         | `on`                       |                                                  |
+| `VARNISHD_PARAM_HTTP_MAX_HDR`              | `64`                       |                                                  |
+| `VARNISHD_PARAM_HTTP_REQ_HDR_LEN`          | `8k`                       |                                                  |
+| `VARNISHD_PARAM_HTTP_REQ_SIZE`             | `32k`                      |                                                  |
+| `VARNISHD_PARAM_HTTP_RESP_HDR_LEN`         | `8k`                       |                                                  |
+| `VARNISHD_PARAM_HTTP_RESP_SIZE`            | `32k`                      |                                                  |
+| `VARNISHD_PARAM_IDLE_SEND_TIMEOUT`         | `60.000`                   |                                                  |
+| `VARNISHD_PARAM_MAX_ESI_DEPTH`             | `5`                        |                                                  |
+| `VARNISHD_PARAM_MAX_RESTARTS`              | `4`                        |                                                  |
+| `VARNISHD_PARAM_MAX_RETRIES`               | `4`                        |                                                  |
+| `VARNISHD_PARAM_NUKE_LIMIT`                | `50`                       |                                                  |
+| `VARNISHD_PARAM_PING_INTERVAL`             | `3`                        |                                                  |
+| `VARNISHD_PARAM_PIPE_TIMEOUT`              | `60.000`                   |                                                  |
+| `VARNISHD_PARAM_POOL_REQ`                  | `10,100,10`                |                                                  |
+| `VARNISHD_PARAM_POOL_SESS`                 | `10,100,10`                |                                                  |
+| `VARNISHD_PARAM_PREFER_IPV6`               | `off`                      |                                                  |
+| `VARNISHD_PARAM_RUSH_EXPONENT`             | `3`                        |                                                  |
+| `VARNISHD_PARAM_SEND_TIMEOUT`              | `600`                      |                                                  |
+| `VARNISHD_PARAM_SHORTLIVED`                | `10.000`                   |                                                  |
+| `VARNISHD_PARAM_TCP_KEEPALIVE_INTVL`       | `75.000`                   |                                                  |
+| `VARNISHD_PARAM_TCP_KEEPALIVE_PROBES`      | `8`                        |                                                  |
+| `VARNISHD_PARAM_TCP_KEEPALIVE_TIME`        | `7200.000`                 |                                                  |
+| `VARNISHD_PARAM_THREAD_POOL_ADD_DELAY`     | `0.000`                    |                                                  |
+| `VARNISHD_PARAM_THREAD_POOL_DESTROY_DELAY` | `1.000`                    |                                                  |
+| `VARNISHD_PARAM_THREAD_POOL_FAIL_DELAY`    | `0.200`                    |                                                  |
+| `VARNISHD_PARAM_THREAD_POOL_MAX`           | `5000`                     |                                                  |
+| `VARNISHD_PARAM_THREAD_POOL_MIN`           | `100`                      |                                                  |
+| `VARNISHD_PARAM_THREAD_POOL_STACK`         | `48k`                      |                                                  |
+| `VARNISHD_PARAM_THREAD_POOL_TIMEOUT`       | `300.000`                  |                                                  |
+| `VARNISHD_PARAM_THREAD_POOLS`              | `2`                        |                                                  |
+| `VARNISHD_PARAM_THREAD_QUEUE_LIMIT`        | `20`                       |                                                  |
+| `VARNISHD_PARAM_TIMEOUT_IDLE`              | `5.000`                    |                                                  |
+| `VARNISHD_PARAM_TIMEOUT_LINGER`            | `0.050`                    |                                                  |
+| `VARNISHD_PARAM_VSL_BUFFER`                | `4k`                       |                                                  |
+| `VARNISHD_PARAM_VSL_RECLEN`                | `255b`                     |                                                  |
+| `VARNISHD_PARAM_VSL_SPACE`                 | `80M`                      |                                                  |
+| `VARNISHD_PARAM_VSM_SPACE`                 | `1M`                       |                                                  |
+| `VARNISHD_PARAM_WORKSPACE_BACKEND`         | `64k`                      |                                                  |
+| `VARNISHD_PARAM_WORKSPACE_CLIENT`          | `64k`                      |                                                  |
+| `VARNISHD_PARAM_WORKSPACE_SESSION`         | `0.50k`                    |                                                  |
+| `VARNISHD_PARAM_WORKSPACE_THREAD`          | `2k`                       |                                                  |
+| `VARNISHD_SECONDARY_STORAGE`               |                            | See example below                                |
+| `VARNISHD_SECRET_FILE`                     | `/etc/varnish/secret`      |                                                  |
+| `VARNISHD_VCL_SCRIPT`                      | `/etc/varnish/default.vcl` |                                                  |
 
 ###### `VARNISH_MOBILE_USER_AGENT`:
 
@@ -171,10 +176,10 @@ VARNISH_STORAGE_CONDITION='beresp.http.x-cache-bin = "secondary"'
 
 ## Installed modules
 
-| Module | Version | Imported |
-| ------ | ------- | -------- |
-| [geoip](https://github.com/varnish/libvmod-geoip) | 1.0.3 | ✓ | 
-| [Set: cookie, vsthrottle, header, saintmode, softpurge, tcp, var, xkey, bodyaccess](https://github.com/varnish/varnish-modules) | latest | |
+| Module                                                                                                                          | Version | Imported |
+| ------                                                                                                                          | ------- | -------- |
+| [geoip](https://github.com/varnish/libvmod-geoip)                                                                               | 1.0.3   | ✓        |
+| [Set: cookie, vsthrottle, header, saintmode, softpurge, tcp, var, xkey, bodyaccess](https://github.com/varnish/varnish-modules) | latest  |          |
 
 Modules can be imported as `$VARNISH_IMPORT_MODULES=cookie,header`.
 
@@ -188,6 +193,7 @@ Modules can be imported as `$VARNISH_IMPORT_MODULES=cookie,header`.
 * Error pages 404 and >500 not cached with grace period `$VARNISH_ERRORS_GRACE`
 * All AJAX requests not cached
 * Big files (larger than `$VARNISH_BIG_FILES_SIZE`) not cached
+* You can optionally separate cache by an individual country via `$VARNISH_CACHE_PER_COUNTRY=1` or by a [currency](#currencies) via `$VARNISH_CACHE_PER_CURRENCY=1`
 
 ### Cache flushing
 
@@ -251,6 +257,22 @@ Add `VARNISH_CONFIG_PRESET=wordpress` to use this preset.
 * Requests with `ak_action|app-download` query params or `akm_mobile` cookie not cached (Jetpack plugin)
 * Strips `replytocom=` query param
 * Use `$VARNISH_WP_ADMIN_SUBDOMAIN` if you have your admin on a subdomain to disable caching 
+
+## Currencies
+
+We identify client's two-letter country code ([ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)) and pass it to a backend in `X-Country-Code` header. We use this country code to identify the currency (USD or EUR) with `$VARNISH_CURRENCY_USD_COUNTRY_CODES` and `$VARNISH_CURRENCY_EUR_COUNTRY_CODES` and pass this information to a backend in `X-Currency` header.
+
+You can optionally separate cache per currency by setting `$VARNISH_CACHE_PER_CURRENCY=1`.
+
+The default country codes for USD (`$VARNISH_CURRENCY_USD_COUNTRY_CODES`), based on [IBAN](https://www.iban.com/currency-codes) data: 
+```
+US|AS|BQ|IO|EC|SV|GU|HT|MH|FM|MP|PA|PW|PR|TL|TC|UM|VG|VI
+```
+
+For EUR (`$VARNISH_CURRENCY_EUR_COUNTRY_CODES`):
+```
+AD|AT|BE|CY|EE|FI|FR|GF|TF|DE|GP|GR|VA|IE|IT|LV|LT|LU|MT|MQ|YT|MC|ME|NL|PT|RE|BL|MF|PM|SM|SK|SI|ES|CE|CH|AX
+```
 
 ## Orchestration Actions
 
