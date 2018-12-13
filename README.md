@@ -216,14 +216,16 @@ We identify client's two-letter country code ([ISO 3166](https://en.wikipedia.or
 
 ### Currency
 
-We use this country code to identify the currency (USD or EUR) with `$VARNISH_CURRENCY_USD_COUNTRY_CODES` and `$VARNISH_CURRENCY_EUR_COUNTRY_CODES` and pass this information to a backend in `X-Currency` header. You can optionally uniquify cache per currency by setting `$VARNISH_CACHE_PER_CURRENCY=1`.
+We use [the country code](#geoip) to identify the currency and pass it to a backend in `X-Currency` header. You can optionally uniquify cache per currency by setting `$VARNISH_CACHE_PER_CURRENCY=1`. 
 
-The default country codes for USD (`$VARNISH_CURRENCY_USD_COUNTRY_CODES`), based on [IBAN](https://www.iban.com/currency-codes) data: 
+We use data from [IBAN](https://www.iban.com/currency-codes) to identify which country uses which currency, currently only USD and EUR supported.
+
+Country codes for USD (`$VARNISH_CURRENCY_USD_COUNTRY_CODES`): 
 ```
 US|AS|BQ|IO|EC|SV|GU|HT|MH|FM|MP|PA|PW|PR|TL|TC|UM|VG|VI
 ```
 
-For EUR (`$VARNISH_CURRENCY_EUR_COUNTRY_CODES`):
+Country codes for EUR (`$VARNISH_CURRENCY_EUR_COUNTRY_CODES`):
 ```
 AD|AT|BE|CY|EE|FI|FR|GF|TF|DE|GP|GR|VA|IE|IT|LV|LT|LU|MT|MQ|YT|MC|ME|NL|PT|RE|BL|MF|PM|SM|SK|SI|ES|CE|CH|AX
 ```
