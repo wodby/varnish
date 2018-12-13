@@ -7,7 +7,7 @@ services:
       NGINX_BACKEND_HOST: php
       NGINX_VHOST_PRESET: php
     depends_on:
-      - php
+    - php
 
   php:
     image: wodby/php
@@ -15,7 +15,7 @@ services:
   varnish:
     image: $IMAGE
     depends_on:
-      - nginx
+    - nginx
     environment:
       VARNISH_IMPORT_MODULES: cookie,header
       VARNISH_BACKEND_HOST: nginx
