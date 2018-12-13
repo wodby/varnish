@@ -214,6 +214,8 @@ On your backend you should check whether `VCKEY-` cookie exists, if it does gene
 
 We identify client's two-letter country code ([ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)) and pass it to a backend in `X-Country-Code` header. You can optionally uniquify cache per country by setting `$VARNISH_CACHE_PER_COUNTRY=1`. We use GeoLite database from MaxMind.
 
+If we see CloudFlare country code header we use it instead.
+
 ### Currency
 
 We use [the country code](#geoip) to identify the currency and pass it to a backend in `X-Currency` header. You can optionally uniquify cache per currency by setting `$VARNISH_CACHE_PER_CURRENCY=1`. 
