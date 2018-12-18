@@ -12,6 +12,26 @@ function _gotpl {
     fi
 }
 
+# Backwards compatibility for old env vars names.
+_backwards_compatibility() {
+    declare -A vars
+    # vars[DEPRECATED]="ACTUAL"
+
+    if [[ "${VARNISH_CONFIG_PRESET}" == "drupal" ]]; then
+        vars[VARNISH_EXCLUDE_URLS]="VARNISH_DRUPAL_EXCLUDE_URLS"
+        vars[VARNISH_PRESERVED_COOKIES]="VARNISH_DRUPAL_PRESERVED_COOKIES"
+    elif [[ "${VARNISH_CONFIG_PRESET}" == "wordpress" ]]; then
+        vars[VARNISH_ADMIN_SUBDOMAIN]="VARNISH_WP_ADMIN_SUBDOMAIN"
+    fi
+
+    for i in "${!vars[@]}"; do
+        # Use value from old var if it's not empty and the new is.
+        if [[ -n "${!i}" && -z "${!vars[$i]}" ]]; then
+            export ${vars[$i]}="${!i}"
+        fi
+    done
+}
+
 init_varnish_secret() {
     if [[ -z "${VARNISH_SECRET}" ]]; then
         export VARNISH_SECRET=$(pwgen -s 128 1)
@@ -29,6 +49,8 @@ init_purge_key() {
 }
 
 process_templates() {
+    _backwards_compatibility
+
     _gotpl 'varnishd.init.d.tmpl' '/etc/init.d/varnishd'
     _gotpl 'default.vcl.tmpl' '/etc/varnish/default.vcl'
 
