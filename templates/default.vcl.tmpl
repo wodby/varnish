@@ -1,0 +1,51 @@
+vcl 4.0;
+
+include "includes/backend.vcl";
+
+import std;
+import geoip;
+
+{{ if getenv "VARNISH_IMPORT_MODULES" }}
+{{ $modules := split (getenv "VARNISH_IMPORT_MODULES") "," }}
+{{ range $modules }}import {{ . }};
+{{ end }}{{ end }}
+
+sub vcl_recv {
+    if (req.http.CF-IPCountry) {
+        set req.http.X-Country-Code = req.http.CF-IPCountry;
+    } else {
+        if (!req.http.X-Real-IP) {
+            set req.http.X-Real-IP = regsub(req.http.X-Forwarded-For, ".*\b(?!10|127)(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}).*", "\1");
+        }
+
+        if (req.http.X-Real-IP) {
+            set req.http.X-Country-Code = geoip.country_code(req.http.X-Real-IP);
+        }
+    }
+
+    if (req.http.X-Country-Code) {
+        {{ $usd_codes := (getenv "VARNISH_CURRENCY_USD_COUNTRY_CODES" "US|AS|BQ|IO|EC|SV|GU|HT|MH|FM|MP|PA|PW|PR|TL|TC|UM|VG|VI") }}
+        {{ $eur_codes := (getenv "VARNISH_CURRENCY_EUR_COUNTRY_CODES" "AD|AT|BE|CY|EE|FI|FR|GF|TF|DE|GP|GR|VA|IE|IT|LV|LT|LU|MT|MQ|YT|MC|ME|NL|PT|RE|BL|MF|PM|SM|SK|SI|ES|CE|CH|AX") }}
+
+        if (req.http.X-Country-Code ~ "{{ $usd_codes }}") {
+            set req.http.X-Currency = "USD";
+        } else if (req.http.X-Country-Code ~ "{{ $eur_codes }}") {
+            set req.http.X-Currency = "EUR";
+        }
+    }
+}
+
+include "preset.vcl";
+
+include "includes/purge.vcl";
+include "includes/static.vcl";
+include "includes/mobile.vcl";
+
+# See https://book.varnish-software.com/4.0/chapters/VCL_Basics.html
+
+include "defaults/vcl_recv.vcl";
+include "defaults/vcl_hash.vcl";
+include "defaults/vcl_pipe.vcl";
+include "defaults/vcl_backend_response.vcl";
+include "defaults/vcl_backend_error.vcl";
+include "defaults/vcl_deliver.vcl";

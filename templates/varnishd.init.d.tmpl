@@ -14,7 +14,7 @@ exec varnishd \
     -f {{ getenv "VARNISHD_VCL_SCRIPT" "/etc/varnish/default.vcl" }} \
     -S {{ getenv "VARNISHD_SECRET_FILE" "/etc/varnish/secret" }} \
     -s main=malloc,{{ getenv "VARNISHD_MEMORY_SIZE" "64M" }} \
-    {{ if getenv "VARNISHD_SECONDARY_STORAGE" }} -s secondary={{ getenv "VARNISHD_SECONDARY_STORAGE" }} {{ end }}\
+    {{ if getenv "VARNISHD_SECONDARY_STORAGE" }}-s secondary={{ getenv "VARNISHD_SECONDARY_STORAGE" }}{{ end }} \
     -t {{ getenv "VARNISHD_DEFAULT_TTL" "120" }} \
     -p ban_lurker_age={{ getenv "VARNISHD_PARAM_BAN_LURKER_AGE" "60.000" }} \
     -p ban_lurker_batch={{ getenv "VARNISHD_PARAM_BAN_LURKER_BATCH" "1000" }} \
@@ -47,7 +47,6 @@ exec varnishd \
     -p prefer_ipv6={{ getenv "VARNISHD_PARAM_PREFER_IPV6" "off" }} \
     -p rush_exponent={{ getenv "VARNISHD_PARAM_RUSH_EXPONENT" "3" }} \
     -p send_timeout={{ getenv "VARNISHD_PARAM_SEND_TIMEOUT" "600" }} \
-    -p session_max={{ getenv "VARNISHD_PARAM_SESSION_MAX" "100000" }} \
     -p shortlived={{ getenv "VARNISHD_PARAM_SHORTLIVED" "10.000" }} \
     -p tcp_keepalive_intvl={{ getenv "VARNISHD_PARAM_TCP_KEEPALIVE_INTVL" "75.000" }} \
     -p tcp_keepalive_probes={{ getenv "VARNISHD_PARAM_TCP_KEEPALIVE_PROBES" "8" }} \

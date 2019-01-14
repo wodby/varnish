@@ -66,7 +66,6 @@ sub vcl_backend_response {
 
     {{ if and (getenv "VARNISH_SECONDARY_STORAGE_CONDITION") (getenv "VARNISHD_SECONDARY_STORAGE") }}
     if ({{ getenv "VARNISH_SECONDARY_STORAGE_CONDITION" }}) {
-      set beresp.storage_hint = "secondary";
       set beresp.http.x-varnish-storage = "secondary";
     }
     {{ end }}
