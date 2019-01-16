@@ -8,6 +8,7 @@ ENV VARNISH_VER="${VARNISH_VER}" \
     LIBVMOD_GEOIP="1.0.3"
 
 COPY patches /tmp/patches/
+COPY GeoIP.dat.gz /usr/share/GeoIP/
 
 RUN set -ex; \
     \
@@ -115,7 +116,8 @@ RUN set -ex; \
     \
     libvmod_geoip_url="https://github.com/varnish/libvmod-geoip/archive/libvmod-geoip-${LIBVMOD_GEOIP}.tar.gz"; \
     wget -qO- "${libvmod_geoip_url}" | tar xz -C /tmp/; \
-    wget -qP /usr/share/GeoIP http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz; \
+# @todo use .mmdb db instead of legacy .dat https://github.com/varnish/libvmod-geoip/issues/18
+#    wget -qP /usr/share/GeoIP http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz; \
     gunzip /usr/share/GeoIP/GeoIP.dat.gz; \
     cd /tmp/libvmod-geoip-*; \
     ./autogen.sh; \
