@@ -1,4 +1,4 @@
-FROM wodby/alpine:3.8-2.1.1
+FROM wodby/alpine:${BASE_IMAGE_TAG}
 
 ARG VARNISH_VER
 

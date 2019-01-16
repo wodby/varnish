@@ -3,6 +3,14 @@
 VARNISH_VER ?= 6.0.2
 VARNISH_VER_MINOR = $(shell v='$(VARNISH_VER)'; echo "$${v%.*}")
 
+ALPINE_VER ?= 3.8
+
+ifeq ($(BASE_IMAGE_STABILITY_TAG),)
+    BASE_IMAGE_TAG := $(ALPINE_VER)
+else
+    BASE_IMAGE_TAG := $(ALPINE_VER)-$(BASE_IMAGE_STABILITY_TAG)
+endif
+
 TAG ?= $(VARNISH_VER_MINOR)
 
 REPO = wodby/varnish
@@ -19,7 +27,9 @@ endif
 default: build
 
 build:
-	docker build -t $(REPO):$(TAG) --build-arg VARNISH_VER=$(VARNISH_VER) ./
+	docker build -t $(REPO):$(TAG) \
+	    --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
+	    --build-arg VARNISH_VER=$(VARNISH_VER) ./
 
 test:
 	cd ./tests/basic && IMAGE=$(REPO):$(TAG) ./run.sh
