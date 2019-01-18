@@ -34,7 +34,7 @@ varnish curl --header "X-Forwarded-For: ${us_ip}" -s "localhost:6081" | grep -q 
 varnish make flush -f /usr/local/bin/actions.mk
 echo "OK"
 
-echo -n "Checking varnish VC-KEY cookies"
+echo -n "Checking varnish VC-KEY cookies... "
 docker-compose exec php sh -c 'echo "<?php echo(\"Hello World\");" > /var/www/html/index.php'
 varnish sh -c 'curl -sI -b "VCKEYinvalid=123"  localhost:6081 | grep -q "X-VC-Cache: MISS"'
 varnish sh -c 'curl -sI -b "VCKEYinvalid=123"  localhost:6081 | grep -q "X-VC-Cache: MISS"'
