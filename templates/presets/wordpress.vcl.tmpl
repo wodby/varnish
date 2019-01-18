@@ -14,13 +14,6 @@ sub vcl_recv {
     # Remove replytocom= param.
     set req.url = regsub(req.url, "\?replytocom=.*$", "");
 
-    {{ $exclude_urls := (getenv "VARNISH_WP_EXCLUDE_URLS" "^(/?ak_action|?app-download|") }}
-
-    # Pass through any administrative or AJAX-related paths.
-    if (req.url ~ "{{ $exclude_urls }}") {
-        return (pass);
-    }
-
     # Remove all cookies that WordPress doesn't need to know about. We explicitly
     # list the ones that WordPress does need. If, after
     # running this code we find that either of these two cookies remains, we
