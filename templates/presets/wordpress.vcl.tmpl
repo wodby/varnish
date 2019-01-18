@@ -6,23 +6,54 @@ sub vcl_recv {
     }
     {{ end }}
 
-    # Do not cache logged-in users. you can set users `logged in cookie` name in settings
-    if (req.http.Cookie ~ "wordpress_logged_in_") {
-        set req.http.X-VC-Cacheable = "NO:Found logged in cookie";
-        return(pass);
-    }
-
     # Pass through some requests that are specifically for the WordPress Jetpack mobile plugin.
     if (req.url ~ "\?(.*&)?(ak_action|app-download)=") {
         return(pass);
     }
 
-    if (req.http.Cookie ~ "(^|;\s*)akm_mobile=") {
-        return(pass);
-    }
-
     # Remove replytocom= param.
     set req.url = regsub(req.url, "\?replytocom=.*$", "");
+
+    {{ $exclude_urls := (getenv "VARNISH_WP_EXCLUDE_URLS" "^(/?ak_action|?app-download|") }}
+
+    # Pass through any administrative or AJAX-related paths.
+    if (req.url ~ "{{ $exclude_urls }}") {
+        return (pass);
+    }
+
+    # Remove all cookies that WordPress doesn't need to know about. We explicitly
+    # list the ones that WordPress does need. If, after
+    # running this code we find that either of these two cookies remains, we
+    # will pass as the page cannot be cached.
+    if (req.http.Cookie) {
+        {{ $preserved_cookies := (getenv "VARNISH_WP_PRESERVED_COOKIES" "wordpress_logged_in_[a-z0-9]+|woocommerce_cart_hash|woocommerce_items_in_cart|wp_woocommerce_session_[a-z0-9]+|akm_mobile") }}
+
+        # 1. Append a semi-colon to the front of the cookie string.
+        # 2. Remove all spaces that appear after semi-colons.
+        # 3. Match the cookies we want to keep, adding the space we removed
+        #    previously back. (\1) is first matching group in the regsuball.
+        # 4. Remove all other cookies, identifying them by the fact that they have
+        #    no space after the preceding semi-colon.
+        # 5. Remove all spaces and semi-colons from the beginning and end of the
+        #    cookie string.
+        set req.http.Cookie = ";" + req.http.Cookie;
+        set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
+        set req.http.Cookie = regsuball(req.http.Cookie, ";({{ $preserved_cookies }})=", "; \1=");
+        set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
+        set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
+
+        if (req.http.Cookie == "") {
+            # If there are no remaining cookies, remove the cookie header. If there
+            # aren't any cookie headers, Varnish's default behavior will be to cache
+            # the page.
+            unset req.http.Cookie;
+        }
+        else {
+            # If there is any cookies left (a session or NO_CACHE cookie), do not
+            # cache the page. Pass it on to Apache directly.
+            return (pass);
+        }
+    }
 
     return(hash);
 }

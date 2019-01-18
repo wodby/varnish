@@ -290,10 +290,18 @@ SESS[a-z0-9]+|SSESS[a-z0-9]+|NO_CACHE
 
 Add `VARNISH_CONFIG_PRESET=wordpress` to use this preset.
 
-* Does not cache for logged-in users
 * Requests with `ak_action|app-download` query params or `akm_mobile` cookie not cached (Jetpack plugin)
 * Strips `replytocom=` query param
 * Use `$VARNISH_WP_ADMIN_SUBDOMAIN` if you have your admin on a subdomain to disable caching 
+* If a cookie from `$VARNISH_WP_PRESERVED_COOKIES` is set a page will not be cached. All other cookies stripped
+
+###### `VARNISH_WP_PRESERVED_COOKIES`:
+
+Not affected by `$VARNISH_KEEP_ALL_COOKIES`
+
+```
+wordpress_logged_in_[a-z0-9]+|woocommerce_cart_hash|woocommerce_items_in_cart|wp_woocommerce_session_[a-z0-9]+|akm_mobile
+```
 
 ## Orchestration Actions
 
