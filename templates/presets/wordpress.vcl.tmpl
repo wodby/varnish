@@ -19,7 +19,7 @@ sub vcl_recv {
     # running this code we find that either of these two cookies remains, we
     # will pass as the page cannot be cached.
     if (req.http.Cookie) {
-        {{ $preserved_cookies := (getenv "VARNISH_WP_PRESERVED_COOKIES" "PHPSESSID|wordpress_logged_in_[a-z0-9]+|woocommerce_cart_hash|woocommerce_items_in_cart|wp_woocommerce_session_[a-z0-9]+|akm_mobile") }}
+        {{ $preserved_cookies := (getenv "VARNISH_WP_PRESERVED_COOKIES" "PHPSESSID|wp-postpass_[a-z0-9]+|wordpress_[a-z0-9]+|wordpress_logged_in_[a-z0-9]+|woocommerce_cart_hash|woocommerce_items_in_cart|wp_woocommerce_session_[a-z0-9]+|akm_mobile") }}
 
         # 1. Append a semi-colon to the front of the cookie string.
         # 2. Remove all spaces that appear after semi-colons.
