@@ -36,9 +36,11 @@ sub vcl_recv {
         }
         # Allow unrestricted purge from internal network.
         {{ if (getenv "VARNISH_PURGE_EXTERNAL_REQUEST_HEADER") }}
+        # If the header is set then it's an external request if we should check the purge key.
         if (req.http.{{ getenv "VARNISH_PURGE_EXTERNAL_REQUEST_HEADER" }} && req.http.X-VC-Purge-Key-Auth != "true") {
             return (synth(405, "Not allowed from " + client.ip));
         }
+        # Usual authorization by the purge key.
         {{ else }}
         if (req.http.X-VC-Purge-Key-Auth != "true") {
             return (synth(405, "Not allowed from " + client.ip));

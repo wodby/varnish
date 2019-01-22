@@ -234,7 +234,7 @@ AD|AT|BE|CY|EE|FI|FR|GF|TF|DE|GP|GR|VA|IE|IT|LV|LT|LU|MT|MQ|YT|MC|ME|NL|PT|RE|BL
 
 ### Cache flushing
 
-* Purge and ban requests both use Varnish's `ban` method to flush cache and restricted by the purge key `$VARNISH_PURGE_KEY` (generated if missing). Use header `X-VC-My-Purge-Key` to pass the key for purge/ban requests
+* Purge and ban requests both use Varnish's `ban` method to flush cache and restricted by the purge key `$VARNISH_PURGE_KEY` (generated if missing). Use header `X-VC-Purge-Key` to pass the key for purge/ban requests
 * Purge requests look up for exact match but ignores query params, you can change the method by setting `X-VC-Purge-Method` to `regex` or `exact` (respects query params)
 * Additionally for ban requests cache flushed by `Cache-Tags` header (Drupal's case)
 * if you want to allow unrestricted purge/ban requests in internal network specify a header via `$VARNISH_PURGE_EXTERNAL_REQUEST_HEADER` that exists only for external requests (e.g. `X-Real-IP`). If specified header is not set Varnish will skip purge key check
