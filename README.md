@@ -300,7 +300,7 @@ Add `VARNISH_CONFIG_PRESET=wordpress` to use this preset.
 Not affected by `$VARNISH_KEEP_ALL_COOKIES`
 
 ```
-PHPSESSID|wp-postpass_[a-z0-9]+|wordpress_[a-z0-9]+|wordpress_logged_in_[a-z0-9]+|woocommerce_cart_hash|woocommerce_items_in_cart|wp_woocommerce_session_[a-z0-9]+|akm_mobile
+PHPSESSID|wp-postpass_[a-z0-9]+|wordpress_[_a-z0-9]+|wordpress_logged_in_[a-z0-9]+|woocommerce_cart_hash|woocommerce_items_in_cart|wp_woocommerce_session_[a-z0-9]+|akm_mobile
 ```
 
 ## Orchestration Actions
