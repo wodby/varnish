@@ -9,7 +9,7 @@ env:
     - ALPINE_VER=3.9
   matrix:
     - VARNISH_VER=6.0.2 TAGS=6.0,6,latest
-    - VARNISH_VER=4.1.10 TAGS=4.1,4
+    - VARNISH_VER=4.1.11 TAGS=4.1,4
 
 script:
   - make && make test
