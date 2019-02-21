@@ -11,7 +11,6 @@ sub vcl_backend_response {
 
 sub vcl_recv {
     if (req.url ~ "(?i)\.({{ $static_files }})(\?.*)?$") {
-        unset req.http.Cookie;
         {{ if not (getenv "VARNISH_CACHE_STATIC_FILES") }}
         # Do not use memory to cache static files.
         return (pass);
