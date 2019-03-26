@@ -214,6 +214,7 @@ On your backend you should check whether `VCKEY-` cookie exists, if it does gene
 
 We identify client's two-letter country code ([ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)) and pass it to a backend in `X-Country-Code` header. If Varnish could not recognize the country the default value will be `Unknown`. You can optionally uniquify cache per country by setting `$VARNISH_CACHE_PER_COUNTRY=1`. We use GeoLite database from MaxMind.
 
+
 If we see CloudFlare country code header we use it instead.
 
 ### Currency
@@ -237,7 +238,7 @@ AD|AT|BE|CY|EE|FI|FR|GF|TF|DE|GP|GR|VA|IE|IT|LV|LT|LU|MT|MQ|YT|MC|ME|NL|PT|RE|BL
 * Purge and ban requests both use Varnish's `ban` method to flush cache and restricted by the purge key `$VARNISH_PURGE_KEY` (generated if missing). Use header `X-VC-Purge-Key` to pass the key for purge/ban requests
 * Purge requests look up for exact match but ignores query params, you can change the method by setting `X-VC-Purge-Method` to `regex` or `exact` (respects query params)
 * Additionally for ban requests cache flushed by `Cache-Tags` header (Drupal's case)
-* if you want to allow unrestricted purge/ban requests in internal network specify a header via `$VARNISH_PURGE_EXTERNAL_REQUEST_HEADER` that exists only for external requests (e.g. `X-Real-IP`). If specified header is not set Varnish will skip purge key check
+* If you want to allow unrestricted purge/ban requests in internal network specify a header via `$VARNISH_PURGE_EXTERNAL_REQUEST_HEADER` that exists only for external requests (e.g. `X-Real-IP`). If specified header is not set Varnish will skip purge key check
 
 ### Miscellaneous
 
