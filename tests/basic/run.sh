@@ -53,6 +53,27 @@ varnish sh -c 'curl -sI -b "VCKEY-valid=123" localhost:6081 | grep -q "X-VC-Cach
 varnish sh -c 'curl -sI -b "VCKEY-valid=123; VCKEY-multiple-cookies_1=123;" localhost:6081 | grep -q "X-VC-Cache: MISS"'
 varnish sh -c 'curl -sI -b "VCKEY-valid=123; VCKEY-multiple-cookies_1=123;" localhost:6081 | grep -q "X-VC-Cache: HIT"'
 varnish sh -c 'curl -sI -b "VCKEY-valid=123; VCKEY-multiple-cookies_1=321;" localhost:6081 | grep -q "X-VC-Cache: MISS"'
+varnish make flush -f /usr/local/bin/actions.mk
+echo "OK"
+
+echo -n "Checking varnish VCKEY cookies availability on a backend... "
+sleep 1 # Waiting for cache to be purged
+docker-compose exec php sh -c 'echo "<?php print mt_rand(10000, 99000);" > /var/www/html/index.php'
+resp_no_vckey1=$(varnish sh -c 'curl -s localhost:6081')
+resp_vckey_a1=$(varnish sh -c 'curl -s -b "VCKEY-Key-A=100" localhost:6081')
+resp_vckey_a2=$(varnish sh -c 'curl -s -b "VCKEY-Key-A=200" localhost:6081')
+resp_vckey_b1=$(varnish sh -c 'curl -s -b "VCKEY-Key-B=100" localhost:6081')
+resp_vckey_b2=$(varnish sh -c 'curl -s -b "VCKEY-Key-B=100" localhost:6081')
+resp_no_vckey2=$(varnish sh -c 'curl -s localhost:6081')
+[[ "${resp_no_vckey1}" =~ ^[0-9]{5}$ ]] || exit 1
+[[ "${resp_no_vckey2}" =~ ^[0-9]{5}$ ]] || exit 1
+[[ "${resp_vckey_a1}" =~ ^[0-9]{5}$ ]] || exit 1
+[[ "${resp_vckey_a2}" =~ ^[0-9]{5}$ ]] || exit 1
+[[ "${resp_vckey_b1}" =~ ^[0-9]{5}$ ]] || exit 1
+[[ "${resp_vckey_b2}" =~ ^[0-9]{5}$ ]] || exit 1
+[[ "${resp_vckey_a1}" != "${resp_vckey_a2}" ]] || exit 1
+[[ "${resp_vckey_b1}" == "${resp_vckey_b2}" ]] || exit 1
+[[ "${resp_no_vckey1}" == "${resp_no_vckey2}" ]] || exit 1
 echo "OK"
 
 docker-compose down
