@@ -1,5 +1,0 @@
-sub vcl_miss {
-    if (req.http.vckey) {
-        set req.http.Cookie = req.http.vckey;
-    }
-}

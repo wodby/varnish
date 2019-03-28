@@ -12,6 +12,7 @@ sub vcl_hash {
 
     if (req.http.vckey) {
         hash_data(req.http.vckey);
+        unset req.http.vckey;
     }
 
     {{ if getenv "VARNISH_CACHE_PER_COUNTRY" }}
