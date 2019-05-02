@@ -7,7 +7,7 @@ sub vcl_recv {
     {{ else }}
     # pass wp-admin urls
 	if (req.url ~ "(wp-login|wp-admin)" || req.url ~ "preview=true" || req.url ~ "xmlrpc.php") {
-	    set req.http.X-VC-Cacheable = "NO:Admin domain";
+	    set req.http.X-VC-Cacheable = "NO:Admin";
 	    return (pass);
 	}
     {{ end }}
