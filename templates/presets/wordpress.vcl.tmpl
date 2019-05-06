@@ -4,6 +4,12 @@ sub vcl_recv {
         set req.http.X-VC-Cacheable = "NO:Admin domain";
         return(pass);
     }
+    {{ else }}
+    # pass wp-admin urls
+	if (req.url ~ "(wp-login|wp-admin)" || req.url ~ "preview=true" || req.url ~ "xmlrpc.php") {
+	    set req.http.X-VC-Cacheable = "NO:Admin";
+	    return (pass);
+	}
     {{ end }}
 
     # Pass through some requests that are specifically for the WordPress Jetpack mobile plugin.
