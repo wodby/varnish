@@ -4,7 +4,7 @@ sub vcl_miss {
     {{ if getenv "VARNISH_PAGESPEED_SECRET_KEY" }}
   	# Instrument 25% of cache misses.
   	if (std.random(0, 100) < 25) {
-    	set req.http.PS-ShouldBeacon = "<your-secret-key>";
+    	set req.http.PS-ShouldBeacon = "{{ getenv "VARNISH_PAGESPEED_SECRET_KEY" }}";
     	return (pass);
   	}
     {{ end }}

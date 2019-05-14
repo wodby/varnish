@@ -5,7 +5,7 @@ sub vcl_hit {
   	# 5% of the time ignore that we got a cache hit and send the request to the
   	# backend anyway for instrumentation.
   	if (std.random(0, 100) < 5) {
-    	set req.http.PS-ShouldBeacon = "<your-secret-key>";
+    	set req.http.PS-ShouldBeacon = "{{ getenv "VARNISH_PAGESPEED_SECRET_KEY" }}";
     	return (pass);
   	}
     {{ end }}
