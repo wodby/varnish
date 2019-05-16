@@ -67,7 +67,6 @@ sub vcl_recv {
     # Don't allow external entities to force beaconing.
     unset req.http.PS-ShouldBeacon;
 
-    # Authenticate the purge request by IP.
     if (req.method == "PURGE") {
         return (purge);
     }
