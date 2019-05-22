@@ -63,13 +63,6 @@ sub vcl_recv {
     {{ if getenv "VARNISH_PAGESPEED_SECRET_KEY" }}
     # Tell PageSpeed not to use optimizations specific to this request.
     set req.http.PS-CapabilityList = "fully general optimizations only";
-
-    # Don't allow external entities to force beaconing.
-    unset req.http.PS-ShouldBeacon;
-
-    if (req.method == "PURGE") {
-        return (purge);
-    }
     {{ end }}
     ### End of Pagespeed
 }
