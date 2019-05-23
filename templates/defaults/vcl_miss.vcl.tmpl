@@ -1,0 +1,12 @@
+sub vcl_miss {
+    ### Pagespeed
+    # Based on the suggestions https://www.modpagespeed.com/doc/downstream-caching
+    {{ if getenv "VARNISH_PAGESPEED_SECRET_KEY" }}
+  	# Instrument 25% of cache misses.
+  	if (std.random(0, 100) < 25) {
+    	set req.http.PS-ShouldBeacon = "{{ getenv "VARNISH_PAGESPEED_SECRET_KEY" }}";
+    	return (pass);
+  	}
+    {{ end }}
+    ### End of Pagespeed
+}

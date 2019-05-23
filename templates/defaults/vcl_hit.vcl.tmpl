@@ -1,0 +1,13 @@
+sub vcl_hit {
+    ### Pagespeed
+    # Based on the suggestions https://www.modpagespeed.com/doc/downstream-caching
+    {{ if getenv "VARNISH_PAGESPEED_SECRET_KEY" }}
+  	# 5% of the time ignore that we got a cache hit and send the request to the
+  	# backend anyway for instrumentation.
+  	if (std.random(0, 100) < 5) {
+    	set req.http.PS-ShouldBeacon = "{{ getenv "VARNISH_PAGESPEED_SECRET_KEY" }}";
+    	return (pass);
+  	}
+    {{ end }}
+    ### End of Pagespeed
+}

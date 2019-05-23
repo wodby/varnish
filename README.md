@@ -74,6 +74,7 @@ Supported tags and respective `Dockerfile` links:
 | `VARNISH_STRIP_COOKIES`                    |                            | See default value below                         |
 | `VARNISH_STRIP_PARAMS`                     |                            | See default value below                         |
 | `VARNISH_STRIP_ALL_PARAMS`                 |                            | Ignored if `$VARNISH_KEEP_ALL_PARAMS` is set    |
+| `VARNISH_PAGESPEED_SECRET_KEY`             |                            | Should be used if mod_pagespeed is enabled      |
 | `VARNISHD_DEFAULT_TTL`                     | `120`                      |                                                 |
 | `VARNISHD_MEMORY_SIZE`                     | `64m`                      |                                                 |
 | `VARNISHD_PARAM_BAN_LURKER_AGE`            | `60.000`                   |                                                 |

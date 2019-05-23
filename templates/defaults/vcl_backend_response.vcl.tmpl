@@ -70,5 +70,15 @@ sub vcl_backend_response {
     }
     {{ end }}
 
+    ### Pagespeed
+    # Based on the suggestions https://www.modpagespeed.com/doc/downstream-caching
+    {{ if getenv "VARNISH_PAGESPEED_SECRET_KEY" }}
+    if (beresp.http.Content-Type ~ "text/html") {
+        unset beresp.http.Cache-Control;
+        set beresp.http.Cache-Control = "no-cache, max-age=0";
+    }
+    {{ end }}
+    ### End of Pagespeed
+
     return(deliver);
 }
