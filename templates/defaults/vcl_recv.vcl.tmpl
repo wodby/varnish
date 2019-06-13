@@ -61,8 +61,10 @@ sub vcl_recv {
     ### Pagespeed
     # Based on the suggestions https://www.modpagespeed.com/doc/downstream-caching
     {{ if getenv "VARNISH_PAGESPEED_SECRET_KEY" }}
+    {{ if getenv "VARNISH_CACHE_STATIC_FILES" }}
     # Tell PageSpeed not to use optimizations specific to this request.
     set req.http.PS-CapabilityList = "fully general optimizations only";
+    {{ end }}
     {{ end }}
     ### End of Pagespeed
 }

@@ -7,7 +7,7 @@ sub vcl_backend_response {
     }
 }
 
-{{ $static_files := (getenv "VARNISH_STATIC_FILES" "asc|doc|xls|ppt|csv|svg|jpg|jpeg|gif|png|ico|css|zip|tgz|gz|rar|bz2|pdf|txt|tar|wav|bmp|rtf|js|flv|swf|html|htm") }}
+{{ $static_files := (getenv "VARNISH_STATIC_FILES" "asc|doc|xls|ppt|csv|svg|jpg|jpeg|gif|png|ico|css|zip|tgz|gz|rar|bz2|pdf|txt|tar|wav|bmp|rtf|js|flv|swf|html|htm|webp") }}
 
 sub vcl_recv {
     if (req.url ~ "(?i)\.({{ $static_files }})(\?.*)?$") {

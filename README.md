@@ -146,7 +146,7 @@ ipod|android|blackberry|phone|mobile|kindle|silk|fennec|tablet|webos|palm|window
 ###### `VARNISH_STATIC_FILES`:
 
 ```
-asc|doc|xls|ppt|csv|svg|jpg|jpeg|gif|png|ico|css|zip|tgz|gz|rar|bz2|pdf|txt|tar|wav|bmp|rtf|js|flv|swf|html|htm
+asc|doc|xls|ppt|csv|svg|jpg|jpeg|gif|png|ico|css|zip|tgz|gz|rar|bz2|pdf|txt|tar|wav|bmp|rtf|js|flv|swf|html|htm|webp
 ```
 
 ###### `VARNISH_STRIP_COOKIES`
