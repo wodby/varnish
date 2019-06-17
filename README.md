@@ -17,7 +17,8 @@
     * [Miscellaneous](#miscellaneous)
 * [Config presets](#config-presets)
     * [Drupal](#drupal)
-    * [WordPress](#wordpress)    
+    * [WordPress](#wordpress)
+* [PageSpeed downstream caching](#pagespeed-downstream-caching)        
 * [Orchestration actions](#orchestration-actions)    
 * [Deployment](#deployment)    
 
@@ -177,7 +178,7 @@ Example: instruct varnish to store in the secondary storage from the backend via
 VARNISH_STORAGE_CONDITION='beresp.http.x-cache-bin = "secondary"'
 ```
 
-## Installed modules
+## Installed Modules
 
 | Module                                                                                      | Version | Imported |
 | ------                                                                                      | ------- | -------- |
@@ -194,9 +195,9 @@ VARNISH_STORAGE_CONDITION='beresp.http.x-cache-bin = "secondary"'
 
 Modules can be imported as `$VARNISH_IMPORT_MODULES=xkey,softpurge`.
 
-## Default behaviour
+## Default Behaviour
 
-### Caching rules
+### Caching Rules
 
 * Only GET or HEAD requests are cached
 * Backend responses with `Set-Cookie` header not cached
@@ -205,7 +206,7 @@ Modules can be imported as `$VARNISH_IMPORT_MODULES=xkey,softpurge`.
 * All AJAX requests not cached
 * Big files (larger than `$VARNISH_BIG_FILES_SIZE`) not cached
 
-### Cache personification
+### Cache Personification
 
 White-listed cookies starting with `VCKEY-` followed by alphanumeric characters, underscores or hyphens are used to build cache hash. You can use such cookies to personify cache by a certain criteria, e.g. set `VCKEY-lang` to `en` or `fr` to cache different versions for English and French users.
 
@@ -234,7 +235,7 @@ Country codes for EUR (`$VARNISH_CURRENCY_EUR_COUNTRY_CODES`):
 AD|AT|BE|CY|EE|FI|FR|GF|TF|DE|GP|GR|VA|IE|IT|LV|LT|LU|MT|MQ|YT|MC|ME|NL|PT|RE|BL|MF|PM|SM|SK|SI|ES|CE|CH|AX
 ```
 
-### Cache flushing
+### Cache Flushing
 
 * Purge and ban requests both use Varnish's `ban` method to flush cache and restricted by the purge key `$VARNISH_PURGE_KEY` (generated if missing). Use header `X-VC-Purge-Key` to pass the key for purge/ban requests
 * Purge requests look up for exact match but ignores query params, you can change the method by setting `X-VC-Purge-Method` to `regex` or `exact` (respects query params)
@@ -261,7 +262,7 @@ AD|AT|BE|CY|EE|FI|FR|GF|TF|DE|GP|GR|VA|IE|IT|LV|LT|LU|MT|MQ|YT|MC|ME|NL|PT|RE|BL
 * `BigPipe` supported
 * Secondary storage can be defined via `$VARNISH_STORAGE_CONDITION`
 
-## Config presets
+## Config Presets
 
 You can use one of the following config presets to extend the default behaviour:
 
@@ -305,7 +306,7 @@ Not affected by `$VARNISH_KEEP_ALL_COOKIES`
 PHPSESSID|wp-postpass_[a-z0-9]+|wordpress_[_a-z0-9]+|wordpress_logged_in_[a-z0-9]+|woocommerce_cart_hash|woocommerce_items_in_cart|wp_woocommerce_session_[a-z0-9]+|akm_mobile
 ```
 
-## Mod PageSpeed
+## PageSpeed Downstream Caching
 
 This image contains implementation for modpagespeed downstream caching as described at https://www.modpagespeed.com/doc/downstream-caching. You can enable this behavior by specifying `$VARNISH_PAGESPEED_SECRET_KEY` to the value that matches `DownstreamCacheRebeaconingKey` in your Nginx/Apache config. This value will be used as `PS-ShouldBeacon` for 5% of hits and 25% of misses. Also, when static files cache enabled on Varnish, `PS-CapabilityList`  will be set to `fully general optimizations only` to [unify behavior for all browsers](https://www.modpagespeed.com/doc/downstream-caching#ps-capabilitylist).
 
