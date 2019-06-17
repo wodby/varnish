@@ -305,6 +305,10 @@ Not affected by `$VARNISH_KEEP_ALL_COOKIES`
 PHPSESSID|wp-postpass_[a-z0-9]+|wordpress_[_a-z0-9]+|wordpress_logged_in_[a-z0-9]+|woocommerce_cart_hash|woocommerce_items_in_cart|wp_woocommerce_session_[a-z0-9]+|akm_mobile
 ```
 
+## Mod PageSpeed
+
+This image contains implementation for modpagespeed downstream caching as described at https://www.modpagespeed.com/doc/downstream-caching. You can enable this behavior by specifying `$VARNISH_PAGESPEED_SECRET_KEY` to the value that matches `DownstreamCacheRebeaconingKey` in your Nginx/Apache config. This value will be used as `PS-ShouldBeacon` for 5% of hits and 25% of misses. Also, when static files cache enabled on Varnish, `PS-CapabilityList`  will be set to `fully general optimizations only` to [unify behavior for all browsers](https://www.modpagespeed.com/doc/downstream-caching#ps-capabilitylist).
+
 ## Orchestration Actions
 
 ```
