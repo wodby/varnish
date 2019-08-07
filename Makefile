@@ -3,7 +3,7 @@
 VARNISH_VER ?= 6.0.3
 VARNISH_VER_MINOR = $(shell v='$(VARNISH_VER)'; echo "$${v%.*}")
 
-ALPINE_VER ?= 3.9
+ALPINE_VER ?= 3.10
 
 ifeq ($(BASE_IMAGE_STABILITY_TAG),)
     BASE_IMAGE_TAG := $(ALPINE_VER)

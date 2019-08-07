@@ -6,7 +6,7 @@ services:
 env:
   global:
   - BASE_IMAGE_STABILITY_TAG=2.3.1
-  - ALPINE_VER=3.9
+  - ALPINE_VER=3.10
   matrix:
   - VARNISH_VER=6.0.3 TAGS=6.0,6,latest
   - VARNISH_VER=4.1.11 TAGS=4.1,4
