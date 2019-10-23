@@ -32,7 +32,6 @@ sub vcl_recv {
 }
 
 include "includes/purge.vcl";
-include "includes/static.vcl";
 include "includes/mobile.vcl";
 
 # See https://book.varnish-software.com/4.0/chapters/VCL_Basics.html
@@ -40,6 +39,7 @@ include "includes/mobile.vcl";
 include "defaults/vcl_recv.vcl";
 
 include "preset.vcl";
+include "includes/static.vcl";
 
 include "defaults/vcl_hash.vcl";
 include "defaults/vcl_pipe.vcl";
