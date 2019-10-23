@@ -4,8 +4,7 @@ FROM wodby/alpine:${BASE_IMAGE_TAG}
 
 ARG VARNISH_VER
 
-ENV VARNISH_VER="${VARNISH_VER}" \
-    LIBVMOD_GEOIP="1.0.3"
+ENV VARNISH_VER="${VARNISH_VER}"
 
 COPY patches /tmp/patches/
 COPY GeoIP.dat.gz /usr/share/GeoIP/
@@ -114,7 +113,8 @@ RUN set -ex; \
     \
     rsync -a --links /tmp/pkg/ /; \
     \
-    libvmod_geoip_url="https://github.com/varnish/libvmod-geoip/archive/libvmod-geoip-${LIBVMOD_GEOIP}.tar.gz"; \
+    libvmod_geoip_ver="1.0.3"; \
+    libvmod_geoip_url="https://github.com/varnish/libvmod-geoip/archive/libvmod-geoip-${libvmod_geoip_ver}.tar.gz"; \
     wget -qO- "${libvmod_geoip_url}" | tar xz -C /tmp/; \
 # @todo use .mmdb db instead of legacy .dat https://github.com/varnish/libvmod-geoip/issues/18
 #    wget -qP /usr/share/GeoIP http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz; \
@@ -126,8 +126,8 @@ RUN set -ex; \
     make install; \
     make check; \
     \
-    # @todo: freeze one the version with the fix get released https://github.com/varnish/varnish-modules/issues/115
-    git clone --depth 1 -b master --single-branch https://github.com/varnish/varnish-modules /tmp/varnish-modules; \
+    # we're using 6.0 branch instead of releases https://github.com/varnish/varnish-modules/issues/144
+    git clone --depth 1 -b 6.0 --single-branch https://github.com/varnish/varnish-modules /tmp/varnish-modules; \
     cd /tmp/varnish-modules; \
     ./bootstrap; \
     ./configure; \
