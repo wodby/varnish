@@ -5,6 +5,12 @@ include "includes/backend.vcl";
 import std;
 import geoip;
 
+sub vcl_recv {
+    if (req.method == "GET" && req.url == "/.vchealthz") {
+        return (synth(204, "OK"));
+    }
+}
+
 {{ if getenv "VARNISH_IMPORT_MODULES" }}
 {{ $modules := split (getenv "VARNISH_IMPORT_MODULES") "," }}
 {{ range $modules }}import {{ . }};

@@ -22,6 +22,10 @@ echo "OK"
 
 us_ip="185.229.59.42"
 
+echo -n "Checking healthz endpoint... "
+varnish curl -s -o /dev/null -w '%{http_code}' "localhost:6081/.vchealthz" | grep -q 204
+echo "OK"
+
 echo -n "Checking varnish backend response containing a country code header detected via geoip module... "
 docker-compose exec php sh -c 'echo "<?php var_dump(\$_SERVER[\"HTTP_X_COUNTRY_CODE\"]);" > /var/www/html/index.php'
 varnish curl --header "X-Real-IP: ${us_ip}" -s "localhost:6081" | grep -q "US"

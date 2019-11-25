@@ -5,22 +5,22 @@
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/varnish.svg)](https://hub.docker.com/r/wodby/varnish)
 [![Docker Layers](https://images.microbadger.com/badges/image/wodby/varnish.svg)](https://microbadger.com/images/wodby/varnish)
 
-* [Docker images](#docker-images)
-* [Environment variables](#environment-variables)
-* [Installed modules](#installed-modules)
-* [Default behaviour](#default-behaviour)
-    * [Caching rules](#caching-rules)
-    * [Cache personification](#cache-personification)
-    * [GeoIP](#geoip)
-    * [Currency](#currency)    
-    * [Flushing](#cache-flushing)
-    * [Miscellaneous](#miscellaneous)
-* [Config presets](#config-presets)
-    * [Drupal](#drupal)
-    * [WordPress](#wordpress)
-* [PageSpeed downstream caching](#pagespeed-downstream-caching)        
-* [Orchestration actions](#orchestration-actions)    
-* [Deployment](#deployment)    
+- [Docker images](#docker-images)
+- [Environment variables](#environment-variables)
+- [Installed modules](#installed-modules)
+- [Default behaviour](#default-behaviour)
+    - [Caching rules](#caching-rules)
+    - [Cache personification](#cache-personification)
+    - [GeoIP](#geoip)
+    - [Currency](#currency)    
+    - [Flushing](#cache-flushing)
+    - [Miscellaneous](#miscellaneous)
+- [Config presets](#config-presets)
+    - [Drupal](#drupal)
+    - [WordPress](#wordpress)
+- [PageSpeed downstream caching](#pagespeed-downstream-caching)        
+- [Orchestration actions](#orchestration-actions)    
+- [Deployment](#deployment)    
 
 ## Docker Images
 
@@ -28,15 +28,15 @@
 
 Overview:
 
-* All images are based on Alpine Linux
-* Base image: [wodby/alpine](https://github.com/wodby/alpine)
-* [Travis CI builds](https://travis-ci.org/wodby/varnish) 
-* [Docker Hub](https://hub.docker.com/r/wodby/varnish)
+- All images are based on Alpine Linux
+- Base image: [wodby/alpine](https://github.com/wodby/alpine)
+- [Travis CI builds](https://travis-ci.org/wodby/varnish) 
+- [Docker Hub](https://hub.docker.com/r/wodby/varnish)
 
 Supported tags and respective `Dockerfile` links:
 
-* `6.0`, `6`, `latest` [_(Dockerfile)_](https://github.com/wodby/varnish/tree/master/Dockerfile)
-* `4.1`, `4` [_(Dockerfile)_](https://github.com/wodby/varnish/tree/master/Dockerfile)
+- `6.0`, `6`, `latest` [_(Dockerfile)_](https://github.com/wodby/varnish/tree/master/Dockerfile)
+- `4.1`, `4` [_(Dockerfile)_](https://github.com/wodby/varnish/tree/master/Dockerfile)
 
 ## Environment Variables
 
@@ -199,12 +199,12 @@ Modules can be imported as `$VARNISH_IMPORT_MODULES=xkey,softpurge`.
 
 ### Caching Rules
 
-* Only GET or HEAD requests are cached
-* Backend responses with `Set-Cookie` header not cached
-* Static files (see `$VARNISH_STATIC_FILES`) not cached by default, set `$VARNISH_CACHE_STATIC_FILES` to cache
-* Error pages 404 and >500 not cached with grace period `$VARNISH_ERRORS_GRACE`
-* All AJAX requests not cached
-* Big files (larger than `$VARNISH_BIG_FILES_SIZE`) not cached
+- Only GET or HEAD requests are cached
+- Backend responses with `Set-Cookie` header not cached
+- Static files (see `$VARNISH_STATIC_FILES`) not cached by default, set `$VARNISH_CACHE_STATIC_FILES` to cache
+- Error pages 404 and >500 not cached with grace period `$VARNISH_ERRORS_GRACE`
+- All AJAX requests not cached
+- Big files (larger than `$VARNISH_BIG_FILES_SIZE`) not cached
 
 ### Cache Personification
 
@@ -237,30 +237,31 @@ AD|AT|BE|CY|EE|FI|FR|GF|TF|DE|GP|GR|VA|IE|IT|LV|LT|LU|MT|MQ|YT|MC|ME|NL|PT|RE|BL
 
 ### Cache Flushing
 
-* Purge and ban requests both use Varnish's `ban` method to flush cache and restricted by the purge key `$VARNISH_PURGE_KEY` (generated if missing). Use header `X-VC-Purge-Key` to pass the key for purge/ban requests
-* Purge requests look up for exact match but ignores query params, you can change the method by setting `X-VC-Purge-Method` to `regex` or `exact` (respects query params)
-* Additionally for ban requests cache flushed by `Cache-Tags` header (Drupal's case)
-* If you want to allow unrestricted purge/ban requests in internal network specify a header via `$VARNISH_PURGE_EXTERNAL_REQUEST_HEADER` that exists only for external requests (e.g. `X-Real-IP`). If specified header is not set Varnish will skip purge key check
+- Purge and ban requests both use Varnish's `ban` method to flush cache and restricted by the purge key `$VARNISH_PURGE_KEY` (generated if missing). Use header `X-VC-Purge-Key` to pass the key for purge/ban requests
+- Purge requests look up for exact match but ignores query params, you can change the method by setting `X-VC-Purge-Method` to `regex` or `exact` (respects query params)
+- Additionally for ban requests cache flushed by `Cache-Tags` header (Drupal's case)
+- If you want to allow unrestricted purge/ban requests in internal network specify a header via `$VARNISH_PURGE_EXTERNAL_REQUEST_HEADER` that exists only for external requests (e.g. `X-Real-IP`). If specified header is not set Varnish will skip purge key check
 
 ### Miscellaneous
 
-* Header `X-VC-Cache` set to `HIT` or `MISS` when varnish delivers content
-* Cache hash includes host (or ip) and request protocol
-* Varnish adds client's IP added to `X-Forwarded-For`
-* [Websocket requests supported](https://varnish-cache.org/docs/4.1/users-guide/vcl-example-websockets.html)
-* Query params (`$VARNISH_STRIP_PARAMS`) stripped unless `$VARNISH_KEEP_ALL_PARAMS` is set
-* Cookies (`$VARNISH_STRIP_COOKIES`) stripped unless `$VARNISH_KEEP_ALL_COOKIES` is set
-* Hashes and trailing `?` stripped from URL before passing to backend
-* By default cache mobile devices is identical. You can separate it by setting `$VARNISH_MOBILE_SEPARATE_CASH` or completely disable by setting `$VARNISH_MOBILE_DISABLE_CASH`. Regex `$VARNISH_MOBILE_USER_AGENT` used to identify mobile devices by `User-Agent` header 
-* Set one of the following headers from backend to disable caching for a page: 
+- Header `X-VC-Cache` set to `HIT` or `MISS` when varnish delivers content
+- Cache hash includes host (or ip) and request protocol
+- Varnish adds client's IP added to `X-Forwarded-For`
+- [Websocket requests supported](https://varnish-cache.org/docs/4.1/users-guide/vcl-example-websockets.html)
+- Query params (`$VARNISH_STRIP_PARAMS`) stripped unless `$VARNISH_KEEP_ALL_PARAMS` is set
+- Cookies (`$VARNISH_STRIP_COOKIES`) stripped unless `$VARNISH_KEEP_ALL_COOKIES` is set
+- Hashes and trailing `?` stripped from URL before passing to backend
+- By default cache mobile devices is identical. You can separate it by setting `$VARNISH_MOBILE_SEPARATE_CASH` or completely disable by setting `$VARNISH_MOBILE_DISABLE_CASH`. Regex `$VARNISH_MOBILE_USER_AGENT` used to identify mobile devices by `User-Agent` header 
+- Set one of the following headers from backend to disable caching for a page: 
     ```
     X-VC-Cacheable: NO
     Cache-control: private
     Cache-control: no-cache
     ```
-* Set `X-VC-Debug` to show cache hashes and pass through header `X-VC-DebugMessage`
-* `BigPipe` supported
-* Secondary storage can be defined via `$VARNISH_STORAGE_CONDITION`
+- Set `X-VC-Debug` to show cache hashes and pass through header `X-VC-DebugMessage`
+- `BigPipe` supported
+- Secondary storage can be defined via `$VARNISH_STORAGE_CONDITION`
+- `./vchealthz` is a liveness endpoint with 204 response code
 
 ## Config Presets
 
@@ -270,8 +271,8 @@ You can use one of the following config presets to extend the default behaviour:
 
 Add `VARNISH_CONFIG_PRESET=drupal` to use this preset.
 
-* Pages matching `$VARNISH_DRUPAL_EXCLUDE_URLS` will not be cached
-* If a cookie from `$VARNISH_DRUPAL_PRESERVED_COOKIES` is set a page will not be cached. All other cookies stripped  
+- Pages matching `$VARNISH_DRUPAL_EXCLUDE_URLS` will not be cached
+- If a cookie from `$VARNISH_DRUPAL_PRESERVED_COOKIES` is set a page will not be cached. All other cookies stripped  
 
 ###### `VARNISH_DRUPAL_EXCLUDE_URLS`:
 
@@ -293,10 +294,10 @@ SESS[a-z0-9]+|SSESS[a-z0-9]+|NO_CACHE
 
 Add `VARNISH_CONFIG_PRESET=wordpress` to use this preset.
 
-* Requests with `ak_action|app-download` query params or `akm_mobile` cookie not cached (Jetpack plugin)
-* Strips `replytocom=` query param
-* Use `$VARNISH_WP_ADMIN_SUBDOMAIN` if you have your admin on a subdomain to disable caching 
-* If a cookie from `$VARNISH_WP_PRESERVED_COOKIES` is set a page will not be cached. All other cookies stripped
+- Requests with `ak_action|app-download` query params or `akm_mobile` cookie not cached (Jetpack plugin)
+- Strips `replytocom=` query param
+- Use `$VARNISH_WP_ADMIN_SUBDOMAIN` if you have your admin on a subdomain to disable caching 
+- If a cookie from `$VARNISH_WP_PRESERVED_COOKIES` is set a page will not be cached. All other cookies stripped
 
 ###### `VARNISH_WP_PRESERVED_COOKIES`:
 
