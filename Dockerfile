@@ -40,9 +40,9 @@ RUN set -ex; \
         linux-headers \
         ncurses-dev \
         pcre-dev \
-        py-docutils \
-        py-sphinx \
-        python \
+        py3-docutils \
+        py3-sphinx \
+        python3 \
         rsync; \
     \
     varnish_url="http://varnish-cache.org/_downloads/varnish-${VARNISH_VER}.tgz"; \
