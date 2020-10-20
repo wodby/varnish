@@ -39,8 +39,15 @@ sub vcl_recv {
         }
         else {
             # If there is any cookies left (a session or NO_CACHE cookie), do not
-            # cache the page. Pass it on to Apache directly.
-            return (pass);
+            # cache anything EXCEPT static files.
+
+            {{ $static_files := (getenv "VARNISH_STATIC_FILES" "asc|doc|xls|ppt|csv|svg|jpg|jpeg|gif|png|ico|css|zip|tgz|gz|rar|bz2|pdf|txt|tar|wav|bmp|rtf|js|flv|swf|html|htm|webp") }}
+
+            if (!((getenv "VARNISH_CACHE_STATIC_FILES") && (req.url ~ "(?i)\.({{ $static_files }})(\?.*)?$"))) {
+                # Not a static file or VARNISH_CACHE_STATIC_FILES not set.
+                # Proceed directly to apache, skipping static.vcl processing.
+                return (pass);
+            }
         }
     }
 }
