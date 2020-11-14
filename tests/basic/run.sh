@@ -7,7 +7,7 @@ if [[ -n "${DEBUG}" ]]; then
 fi
 
 varnish() {
-    docker-compose exec varnish "${@}"
+    docker-compose exec -T varnish "${@}"
 }
 
 docker-compose up -d
