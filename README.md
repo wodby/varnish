@@ -1,6 +1,6 @@
 # Varnish Docker Container Image
 
-[![Build Status](https://travis-ci.org/wodby/varnish.svg?branch=master)](https://travis-ci.org/wodby/varnish)
+[![Build Status](https://github.com/wodby/varnish/workflows/Build%20docker%20image/badge.svg)](https://github.com/wodby/varnish/actions)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/varnish.svg)](https://hub.docker.com/r/wodby/varnish)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/varnish.svg)](https://hub.docker.com/r/wodby/varnish)
 [![Docker Layers](https://images.microbadger.com/badges/image/wodby/varnish.svg)](https://microbadger.com/images/wodby/varnish)
@@ -30,7 +30,7 @@ Overview:
 
 - All images are based on Alpine Linux
 - Base image: [wodby/alpine](https://github.com/wodby/alpine)
-- [Travis CI builds](https://travis-ci.org/wodby/varnish) 
+- [GitHub actions builds](https://github.com/wodby/varnish/actions) 
 - [Docker Hub](https://hub.docker.com/r/wodby/varnish)
 
 Supported tags and respective `Dockerfile` links:

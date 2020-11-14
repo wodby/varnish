@@ -1,0 +1,34 @@
+name: Build
+description: Build varnish image
+inputs:
+  version:
+    description: version
+    required: true
+  tags:
+    description: image tags
+    required: true
+  username:
+    description: docker username
+    required: true
+  password:
+    description: docker password
+    required: true
+  base_image_stability_tag:
+    description: base image stability tag
+    required: true
+runs:
+  using: "composite"
+  steps:
+  - name: Build image
+    env:
+      VARNISH_VER: ${{ inputs.version }}
+      DOCKER_USERNAME: ${{ inputs.username }}
+      DOCKER_PASSWORD: ${{ inputs.password }}
+      TAGS: ${{ inputs.tags }}
+      BASE_IMAGE_STABILITY_TAG: ${{ inputs.base_image_stability_tag }}
+    run: |
+      set -e
+      make
+      make test
+      . $GITHUB_ACTION_PATH/release.sh
+    shell: bash

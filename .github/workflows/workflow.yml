@@ -1,0 +1,36 @@
+name: Build docker image
+
+on:
+  push:
+    branches:
+    - master
+
+    tags:
+    - '*'
+
+env:
+  BASE_IMAGE_STABILITY_TAG: 2.5.1
+
+jobs:
+  varnish-60:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/actions
+      with:
+        version: 6.0.7
+        tags: 6.0,6,latest
+        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+  varnish-4:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/actions
+      with:
+        version: 4.1.11
+        tags: 4.1,4
+        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
