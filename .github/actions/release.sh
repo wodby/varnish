@@ -12,6 +12,6 @@ if [[ "${GITHUB_REF}" == refs/heads/master || "${GITHUB_REF}" == refs/tags/* ]];
     IFS=',' read -ra tags <<< "${TAGS}"
 
     for tag in "${tags[@]}"; do
-        make buildx-push TAG="${tag}";
+        make release TAG="${tag}";
     done
 fi
