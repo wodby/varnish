@@ -33,6 +33,8 @@ Overview:
 - [GitHub actions builds](https://github.com/wodby/varnish/actions) 
 - [Docker Hub](https://hub.docker.com/r/wodby/varnish)
 
+All images built for `linux/amd64` and `linux/arm64`
+
 Supported tags and respective `Dockerfile` links:
 
 - `6.0`, `6`, `latest` [_(Dockerfile)_](https://github.com/wodby/varnish/tree/master/Dockerfile)

@@ -10,27 +10,36 @@ on:
 
 env:
   BASE_IMAGE_STABILITY_TAG: 2.8.0
+  ALPINE_VER: 3.13
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
   varnish-60:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: amd64,arm64
+    - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
         version: 6.0.7
         tags: 6.0,6,latest
         base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        platform: linux/amd64,linux/arm64
   varnish-4:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: amd64,arm64
+    - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
         version: 4.1.11
         tags: 4.1,4
         base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        platform: linux/amd64,linux/arm64

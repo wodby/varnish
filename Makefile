@@ -3,7 +3,9 @@
 VARNISH_VER ?= 6.0.7
 VARNISH_VER_MINOR = $(shell v='$(VARNISH_VER)'; echo "$${v%.*}")
 
-ALPINE_VER ?= 3.12
+ALPINE_VER ?= 3.13
+
+PLATFORM ?= linux/amd64
 
 ifeq ($(BASE_IMAGE_STABILITY_TAG),)
     BASE_IMAGE_TAG := $(ALPINE_VER)
@@ -22,7 +24,7 @@ ifneq ($(STABILITY_TAG),)
     endif
 endif
 
-.PHONY: build test test-clean push shell run start stop logs clean release
+.PHONY: build buildx-build buildx-push buildx-build-amd64 test test-clean push shell run start stop logs clean release
 
 default: build
 
@@ -30,6 +32,27 @@ build:
 	docker build -t $(REPO):$(TAG) \
 	    --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
 	    --build-arg VARNISH_VER=$(VARNISH_VER) ./
+
+# --load doesn't work with multiple platforms https://github.com/docker/buildx/issues/59
+# we need to save cache to run tests first.
+buildx-build-amd64:
+	docker buildx build --platform linux/amd64 -t $(REPO):$(TAG) \
+	    --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
+	    --build-arg VARNISH_VER=$(VARNISH_VER) \
+		--load \
+	    ./
+
+buildx-build:
+	docker buildx build --platform $(PLATFORM) -t $(REPO):$(TAG) \
+	    --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
+	    --build-arg VARNISH_VER=$(VARNISH_VER) \
+	    ./
+
+buildx-push:
+	docker buildx build --push --platform $(PLATFORM) -t $(REPO):$(TAG) \
+	    --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
+	    --build-arg VARNISH_VER=$(VARNISH_VER) \
+	    ./
 
 test:
 	cd ./tests/basic && IMAGE=$(REPO):$(TAG) ./run.sh
