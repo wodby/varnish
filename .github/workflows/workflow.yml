@@ -25,7 +25,7 @@ jobs:
     - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
-        version: 6.0.7
+        version: 6.0.8
         tags: 6.0,6,latest
         base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
 #        platform: linux/amd64,linux/arm64
