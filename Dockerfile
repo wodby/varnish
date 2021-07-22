@@ -54,8 +54,6 @@ RUN set -ex; \
     for i in /tmp/patches/"${VARNISH_VER:0:1}"/*.patch; do patch -p1 -i "${i}"; done; \
     \
     ./configure \
-		--build=x86_64-alpine-linux-musl \
-		--host=x86_64-alpine-linux-musl \
 		--prefix=/usr \
 		--sysconfdir=/etc \
 		--mandir=/usr/share/man \
