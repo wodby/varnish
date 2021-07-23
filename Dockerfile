@@ -3,6 +3,8 @@ ARG BASE_IMAGE_TAG
 FROM wodby/alpine:${BASE_IMAGE_TAG}
 
 ARG VARNISH_VER
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
 
 ENV VARNISH_VER="${VARNISH_VER}"
 
@@ -53,7 +55,17 @@ RUN set -ex; \
     # Patch from alpine varnish package repository.
     for i in /tmp/patches/"${VARNISH_VER:0:1}"/*.patch; do patch -p1 -i "${i}"; done; \
     \
+    host="x86_64"; \
+    build="x86_64"; \
+    if [[ "${TARGETPLATFORM}" == "linux/arm64" ]]; then \
+        host="aarch64"; \
+    fi; \
+    if [[ "${BUILDPLATFORM}" == "linux/arm64" ]]; then \
+        build="aarch64"; \
+    fi; \
     ./configure \
+#		--build="${build}-alpine-linux-musl" \
+#		--host="${host}-alpine-linux-musl" \
 		--prefix=/usr \
 		--sysconfdir=/etc \
 		--mandir=/usr/share/man \
@@ -120,7 +132,9 @@ RUN set -ex; \
     gunzip /usr/share/GeoIP/GeoIP.dat.gz; \
     cd /tmp/libvmod-geoip-*; \
     ./autogen.sh; \
-    ./configure; \
+    ./configure \
+#        --build="${build}-alpine-linux-musl" \
+        --host="${host}-alpine-linux-musl"; \
     make; \
     make install; \
     make check; \
