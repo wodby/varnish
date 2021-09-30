@@ -15,7 +15,6 @@ sub vcl_recv {
         # Do not use memory to cache static files.
         return (pass);
         {{ end }}
-        set req.url = regsub(req.url, "\?.*$", "");
         # unset cookie only if no http auth
         if (!req.http.Authorization) {
             unset req.http.Cookie;
