@@ -1,6 +1,6 @@
 -include env.mk
 
-VARNISH_VER ?= 6.0.8
+VARNISH_VER ?= 6.0.9
 VARNISH_VER_MINOR = $(shell v='$(VARNISH_VER)'; echo "$${v%.*}")
 
 ALPINE_VER ?= 3.13
