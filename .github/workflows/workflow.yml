@@ -27,7 +27,6 @@ jobs:
       with:
         version: '6.0.10'
         tags: 6.0,6,latest
-        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
         platform: linux/amd64,linux/arm64
   varnish-4:
     runs-on: ubuntu-latest
@@ -41,5 +40,4 @@ jobs:
       with:
         version: 4.1.11
         tags: 4.1,4
-        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
         platform: linux/amd64,linux/arm64

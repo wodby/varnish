@@ -3,7 +3,6 @@
 [![Build Status](https://github.com/wodby/varnish/workflows/Build%20docker%20image/badge.svg)](https://github.com/wodby/varnish/actions)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/varnish.svg)](https://hub.docker.com/r/wodby/varnish)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/varnish.svg)](https://hub.docker.com/r/wodby/varnish)
-[![Docker Layers](https://images.microbadger.com/badges/image/wodby/varnish.svg)](https://microbadger.com/images/wodby/varnish)
 
 - [Docker images](#docker-images)
 - [Environment variables](#environment-variables)

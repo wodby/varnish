@@ -7,9 +7,6 @@ inputs:
   tags:
     description: image tags
     required: true
-  base_image_stability_tag:
-    description: base image stability tag
-    required: true
   platform:
     description: docker platform
     required: false
@@ -21,7 +18,6 @@ runs:
     env:
       VARNISH_VER: ${{ inputs.version }}
       TAGS: ${{ inputs.tags }}
-      BASE_IMAGE_STABILITY_TAG: ${{ inputs.base_image_stability_tag }}
       PLATFORM: ${{ inputs.platform }}
     run: |
       set -e
