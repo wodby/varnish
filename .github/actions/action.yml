@@ -7,6 +7,9 @@ inputs:
   tags:
     description: image tags
     required: true
+  alpine_ver:
+    description: alpine version
+    required: true
   platform:
     description: docker platform
     required: false
@@ -19,6 +22,7 @@ runs:
       VARNISH_VER: ${{ inputs.version }}
       TAGS: ${{ inputs.tags }}
       PLATFORM: ${{ inputs.platform }}
+      ALPINE_VER: ${{ inputs.alpine_ver }}
     run: |
       set -e
       make buildx-build-amd64

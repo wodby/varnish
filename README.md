@@ -38,11 +38,13 @@ Supported tags and respective `Dockerfile` links:
 
 - `6.0`, `6`, `latest` [_(Dockerfile)_](https://github.com/wodby/varnish/tree/master/Dockerfile)
 - `4.1`, `4` [_(Dockerfile)_](https://github.com/wodby/varnish/tree/master/Dockerfile)
+- `6.0-alpine3.13`, `6-alpine3.13`, `alpine3.13` [_(Dockerfile)_](https://github.com/wodby/varnish/tree/master/Dockerfile)
+- `4.1-alpine3.13`, `4-alpine3.13` [_(Dockerfile)_](https://github.com/wodby/varnish/tree/master/Dockerfile)
 
 ## Environment Variables
 
 | Variable                                   | Default Value              | Description                                     |
-| ------------------------------------------ | -------------------------- | ----------------------------------              |
+|--------------------------------------------|----------------------------|-------------------------------------------------|
 | `VARNISH_ALLOW_UNRESTRICTED_PURGE`         |                            | Used for ban requests as well                   |
 | `VARNISH_BACKEND_BETWEEN_BYTES_TIMEOUT`    | `60s`                      |                                                 |
 | `VARNISH_BACKEND_CONNECT_TIMEOUT`          | `3.5s`                     |                                                 |

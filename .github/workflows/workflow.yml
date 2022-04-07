@@ -10,9 +10,10 @@ on:
 
 env:
   BASE_IMAGE_STABILITY_TAG: 2.10.6
-  ALPINE_VER: 3.13
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  VARNISH60: '6.0.10'
+  VARNISH41: '4.1.11'
 
 jobs:
   varnish-60:
@@ -25,9 +26,10 @@ jobs:
     - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
-        version: '6.0.10'
+        version: ${{ env.VARNISH60 }}
         tags: 6.0,6,latest
         platform: linux/amd64,linux/arm64
+        alpine_ver: 3.15
   varnish-4:
     runs-on: ubuntu-latest
     steps:
@@ -38,6 +40,35 @@ jobs:
     - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
-        version: 4.1.11
+        version: ${{ env.VARNISH41 }}
         tags: 4.1,4
         platform: linux/amd64,linux/arm64
+        alpine_ver: 3.15
+  varnish-60-alpine313:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: amd64,arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: ${{ env.VARNISH60 }}
+        tags: 6.0-alpine3.13,6-alpine3.13,alpine3.13
+        platform: linux/amd64,linux/arm64
+        alpine_ver: 3.13
+  varnish-4-alpine313:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: amd64,arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: ${{ env.VARNISH41 }}
+        tags: 4.1-alpine3.13,4-alpine3.13
+        platform: linux/amd64,linux/arm64
+        alpine_ver: 3.13

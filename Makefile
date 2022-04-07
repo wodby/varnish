@@ -3,7 +3,7 @@
 VARNISH_VER ?= 6.0.10
 VARNISH_VER_MINOR = $(shell v='$(VARNISH_VER)'; echo "$${v%.*}")
 
-ALPINE_VER ?= 3.13
+ALPINE_VER ?= 3.15
 
 PLATFORM ?= linux/amd64
 
