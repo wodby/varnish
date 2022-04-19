@@ -19,7 +19,6 @@ runs:
       VARNISH_VER: ${{ inputs.version }}
       TAGS: ${{ inputs.tags }}
       PLATFORM: ${{ inputs.platform }}
-      ALPINE_VER: ${{ inputs.alpine_ver }}
     run: |
       set -e
       make buildx-build-amd64
