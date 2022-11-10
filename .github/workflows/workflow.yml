@@ -25,7 +25,7 @@ jobs:
     - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
-        version: '6.0.10'
+        version: '6.0.11'
         tags: 6.0,6,latest
         platform: linux/amd64,linux/arm64
   varnish-4:
