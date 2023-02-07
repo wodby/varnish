@@ -26,6 +26,7 @@ RUN set -ex; \
         libgcc \
         make \
         ncurses-libs \
+        openssl \
         pcre \
         pwgen; \
     \
@@ -41,6 +42,7 @@ RUN set -ex; \
         libtool \
         linux-headers \
         ncurses-dev \
+        openssl-dev \
         pcre-dev \
         py3-docutils \
         py3-sphinx \
