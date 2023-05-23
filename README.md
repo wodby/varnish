@@ -184,6 +184,7 @@ VARNISH_STORAGE_CONDITION='beresp.http.x-cache-bin = "secondary"'
 | Module                                                                                      | Version | Imported |
 | ------                                                                                      | ------- | -------- |
 | [geoip](https://github.com/varnish/libvmod-geoip)                                           | 1.0.3   | ✓        |
+| [digest](https://github.com/varnish/libvmod-digest)                                         | 1.0.2   |          |
 | [cookie](https://github.com/varnish/varnish-modules/blob/master/docs/vmod_cookie.rst)       | latest  |          |
 | [vsthrottle](https://github.com/varnish/varnish-modules/blob/master/docs/vmod_cookie.rst)   | latest  |          |
 | [header](https://github.com/varnish/varnish-modules/blob/master/docs/vmod_header.rst)       | latest  |          |
