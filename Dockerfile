@@ -22,6 +22,7 @@ RUN set -ex; \
         libc-dev \
         libedit \
         libexecinfo \
+        libmhash --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
         geoip \
         libgcc \
         make \
@@ -39,6 +40,7 @@ RUN set -ex; \
         geoip-dev \
         libedit-dev \
         libexecinfo-dev \
+        libmhash-dev --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
         libtool \
         linux-headers \
         ncurses-dev \
@@ -125,6 +127,18 @@ RUN set -ex; \
 #    wget -qP /usr/share/GeoIP http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz; \
     gunzip /usr/share/GeoIP/GeoIP.dat.gz; \
     cd /tmp/libvmod-geoip-*; \
+    ./autogen.sh; \
+    ./configure; \
+    make; \
+    make install; \
+    if [[ "${TARGETPLATFORM}" != "linux/arm64" ]]; then \
+        make check; \
+    fi; \
+    \
+    libvmod_digest_ver="1.0.2"; \
+    libvmod_digest_url="https://github.com/varnish/libvmod-digest/archive/libvmod-digest-${libvmod_digest_ver}.tar.gz"; \
+    wget -qO- "${libvmod_digest_url}" | tar xz -C /tmp/; \
+    cd /tmp/libvmod-digest-*; \
     ./autogen.sh; \
     ./configure; \
     make; \

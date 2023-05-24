@@ -17,5 +17,5 @@ services:
     depends_on:
     - nginx
     environment:
-      VARNISH_IMPORT_MODULES: cookie,header
+      VARNISH_IMPORT_MODULES: cookie,header,digest
       VARNISH_BACKEND_HOST: nginx
