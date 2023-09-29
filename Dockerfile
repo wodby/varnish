@@ -21,8 +21,8 @@ RUN set -ex; \
         gcc \
         libc-dev \
         libedit \
-        libexecinfo \
         libmhash --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
+        libunwind \
         geoip \
         libgcc \
         make \
@@ -39,8 +39,8 @@ RUN set -ex; \
         git \
         geoip-dev \
         libedit-dev \
-        libexecinfo-dev \
         libmhash-dev --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
+        libunwind-dev \
         libtool \
         linux-headers \
         ncurses-dev \
@@ -51,7 +51,6 @@ RUN set -ex; \
         python3 \
         rsync; \
     \
-    ln -s /usr/bin/python3 /usr/bin/python; \
     varnish_url="http://varnish-cache.org/_downloads/varnish-${VARNISH_VER}.tgz"; \
     wget -qO- "${varnish_url}" | tar xz -C /tmp/; \
     cd /tmp/varnish-*; \
@@ -65,6 +64,7 @@ RUN set -ex; \
 		--mandir=/usr/share/man \
 		--infodir=/usr/share/info \
 		--localstatedir=/var/lib \
+        --with-unwind \
 		--without-jemalloc; \
     \
     make -j "$(nproc)"; \
@@ -174,7 +174,6 @@ RUN set -ex; \
     \
     while IFS= read -r file ; do rm -rf -- "${file}" ; done < /tmp/varnish-dev-files; \
     apk del --purge .varnish-build-deps; \
-    rm /usr/bin/python; \
     rm -rf /tmp/*; \
     rm -rf /var/cache/apk/*
 

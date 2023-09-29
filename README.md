@@ -37,7 +37,6 @@ All images built for `linux/amd64` and `linux/arm64`
 Supported tags and respective `Dockerfile` links:
 
 - `6.0`, `6`, `latest` [_(Dockerfile)_](https://github.com/wodby/varnish/tree/master/Dockerfile)
-- `4.1`, `4` [_(Dockerfile)_](https://github.com/wodby/varnish/tree/master/Dockerfile)
 
 ## Environment Variables
 

@@ -28,16 +28,3 @@ jobs:
         version: '6.0.11'
         tags: 6.0,6,latest
         platform: linux/amd64,linux/arm64
-  varnish-4:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v1
-    - uses: ./.github/actions
-      with:
-        version: '4.1.11'
-        tags: 4.1,4
-        platform: linux/amd64,linux/arm64
