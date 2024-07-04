@@ -168,6 +168,7 @@ RUN set -ex; \
 	    /etc/varnish/defaults \
 	    /etc/varnish/includes; \
     \
+    mkdir -p /etc/init.d/; \
     touch /etc/varnish/preset.vcl /etc/init.d/varnishd; \
     chown varnish:varnish /etc/varnish/preset.vcl /etc/init.d/varnishd; \
     chmod +x /etc/init.d/varnishd; \
