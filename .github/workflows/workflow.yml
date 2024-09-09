@@ -18,11 +18,11 @@ jobs:
   varnish-60:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: docker/setup-qemu-action@v1
+    - uses: actions/checkout@v4
+    - uses: docker/setup-qemu-action@v3
       with:
         platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v1
+    - uses: docker/setup-buildx-action@v3
     - uses: ./.github/actions
       with:
         version: '6.0.13'
