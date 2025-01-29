@@ -10,21 +10,51 @@ on:
 
 env:
   BASE_IMAGE_STABILITY_TAG: 2.16.3
+  VARNISH60: '6.0.13'
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
-
 jobs:
-  varnish-60:
-    runs-on: ubuntu-latest
+  varnish60-build:
+    strategy:
+      matrix:
+        platform:
+          - linux/amd64
+          - linux/arm64
+        include:
+          - platform: linux/amd64
+            runner: ubuntu-24.04
+            arch: amd64
+          - platform: linux/arm64
+            runner: ubuntu-24.04-arm
+            arch: arm64
+    runs-on: ${{ matrix.runner }}
     steps:
-    - uses: actions/checkout@v4
-    - uses: docker/setup-qemu-action@v3
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v3
-    - uses: ./.github/actions
-      with:
-        version: '6.0.13'
-        tags: 6.0,6,latest
-        platform: linux/amd64,linux/arm64
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: docker/setup-buildx-action@v3
+      - name: build and push
+        env:
+          VARNISH_VER: ${{ env.VARNISH60 }}
+          ARCH: ${{ matrix.arch }}
+          PLATFORM: ${{ matrix.platform }}
+        run: |
+          make buildx-build
+          make buildx-push
+  varnish60-push:
+    runs-on: ubuntu-latest
+    needs:
+      - varnish60-build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: ./.github/actions
+        with:
+          version: ${{ env.VARNISH60 }}
+          latest: true

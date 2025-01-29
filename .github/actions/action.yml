@@ -1,28 +1,36 @@
-name: Build
-description: Build varnish image
+name: push
+description: combine multi-arch image and push
 inputs:
   version:
     description: version
     required: true
-  tags:
-    description: image tags
-    required: true
-  platform:
-    description: docker platform
+  latest:
+    description: if tag latest
     required: false
-    default: linux/amd64
 runs:
   using: "composite"
   steps:
-  - name: Build image
-    env:
-      VARNISH_VER: ${{ inputs.version }}
-      TAGS: ${{ inputs.tags }}
-      PLATFORM: ${{ inputs.platform }}
-    run: |
-      set -e
-      make buildx-build-amd64
-      make test
-      make buildx-build
-      . $GITHUB_ACTION_PATH/release.sh
-    shell: bash
+    - name: Build image
+      env:
+        VERSION: ${{ inputs.version }}
+        LATEST: ${{ inputs.latest }}
+      run: |
+        if [[ "${GITHUB_REF}" == refs/heads/master || "${GITHUB_REF}" == refs/tags/* ]]; then      
+          minor_ver="${VERSION%.*}"
+          major_ver="${minor_ver%.*}"
+        
+          tags=("${minor_ver}" "${major_ver}")
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            stability_tag=("${GITHUB_REF##*/}")
+            tags=("${minor_ver}-${stability_tag}" "${major_ver}-${stability_tag}")
+          else          
+            if [[ -n "${LATEST}" ]]; then
+              tags+=("latest")
+            fi
+          fi
+        
+          for tag in "${tags[@]}"; do
+            make buildx-imagetools-create TAG=${tag} 
+          done
+        fi
+      shell: bash
