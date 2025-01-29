@@ -7,6 +7,9 @@ inputs:
   latest:
     description: if tag latest
     required: false
+  latest_major:
+    description: if tag latest major version
+    required: false
 runs:
   using: "composite"
   steps:
@@ -14,23 +17,7 @@ runs:
       env:
         VERSION: ${{ inputs.version }}
         LATEST: ${{ inputs.latest }}
+        LATEST_MAJOR: ${{ inputs.latest_major }}
       run: |
-        if [[ "${GITHUB_REF}" == refs/heads/master || "${GITHUB_REF}" == refs/tags/* ]]; then      
-          minor_ver="${VERSION%.*}"
-          major_ver="${minor_ver%.*}"
-        
-          tags=("${minor_ver}" "${major_ver}")
-          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
-            stability_tag=("${GITHUB_REF##*/}")
-            tags=("${minor_ver}-${stability_tag}" "${major_ver}-${stability_tag}")
-          else          
-            if [[ -n "${LATEST}" ]]; then
-              tags+=("latest")
-            fi
-          fi
-        
-          for tag in "${tags[@]}"; do
-            make buildx-imagetools-create TAG=${tag} 
-          done
-        fi
+        . $GITHUB_ACTION_PATH/release.sh
       shell: bash

@@ -58,3 +58,4 @@ jobs:
         with:
           version: ${{ env.VARNISH60 }}
           latest: true
+          latest_major: true
