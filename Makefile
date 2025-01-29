@@ -18,6 +18,10 @@ TAG ?= $(VARNISH_VER_MINOR)
 REPO = wodby/varnish
 NAME = varnish-$(VARNISH_VER_MINOR)
 
+ifneq ($(ARCH),)
+	override TAG := $(TAG)-$(ARCH)
+endif
+
 .PHONY: build buildx-build buildx-push test test-clean push shell run start stop logs clean release
 
 default: build
