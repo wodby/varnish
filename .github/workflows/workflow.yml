@@ -43,6 +43,7 @@ jobs:
           PLATFORM: ${{ matrix.platform }}
         run: |
           make buildx-build
+          make test
           make buildx-push
   varnish60-push:
     runs-on: ubuntu-latest

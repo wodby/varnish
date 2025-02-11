@@ -35,6 +35,7 @@ buildx-build:
 	docker buildx build --platform $(PLATFORM) -t $(REPO):$(TAG) \
 	    --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
 	    --build-arg VARNISH_VER=$(VARNISH_VER) \
+	    --load \
 	    ./
 
 buildx-push:
