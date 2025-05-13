@@ -10,7 +10,7 @@ on:
 
 env:
   BASE_IMAGE_STABILITY_TAG: 2.16.4
-  VARNISH60: '6.0.13'
+  VARNISH60: '6.0.14'
 
 jobs:
   varnish60-build:
