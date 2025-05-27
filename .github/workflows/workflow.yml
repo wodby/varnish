@@ -9,7 +9,7 @@ on:
     - '*'
 
 env:
-  BASE_IMAGE_STABILITY_TAG: 2.16.4
+  BASE_IMAGE_STABILITY_TAG: 2.17.0
   VARNISH60: '6.0.14'
 
 jobs:
