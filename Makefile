@@ -1,6 +1,6 @@
 -include env.mk
 
-VARNISH_VER ?= 6.0.15
+VARNISH_VER ?= 6.0.16
 VARNISH_VER_MINOR = $(shell echo "${VARNISH_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
 ALPINE_VER ?= 3.20
