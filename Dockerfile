@@ -169,14 +169,22 @@ RUN set -ex; \
 	    /etc/varnish/includes; \
     \
     mkdir -p /etc/init.d/; \
-    touch /etc/varnish/preset.vcl /etc/init.d/varnishd; \
-    chown varnish:varnish /etc/varnish/preset.vcl; \
+    touch /etc/varnish/preset.vcl /etc/init.d/varnishd /etc/varnish/secret /etc/varnish/default.vcl; \
+    chown varnish:varnish \
+        /etc/varnish/preset.vcl \
+        /etc/varnish/default.vcl \
+        /etc/varnish/secret \
+        /etc/init.d/varnishd \
+        /etc/varnish/defaults \
+        /etc/varnish/includes; \
     chmod +x /etc/init.d/varnishd; \
     \
     while IFS= read -r file ; do rm -rf -- "${file}" ; done < /tmp/varnish-dev-files; \
     apk del --purge .varnish-build-deps; \
     rm -rf /tmp/*; \
     rm -rf /var/cache/apk/*
+
+USER varnish
 
 EXPOSE 6081 6082
 

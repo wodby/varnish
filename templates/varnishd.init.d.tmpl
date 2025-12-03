@@ -7,7 +7,6 @@ if [[ -n "${DEBUG}" ]]; then
 fi
 
 exec varnishd \
-    -j unix,user=varnish \
     -F \
     -a :6081 \
     -T :6082 \
