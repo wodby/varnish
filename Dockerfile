@@ -13,8 +13,8 @@ COPY GeoIP.dat.gz /usr/share/GeoIP/
 
 RUN set -ex; \
     \
-    addgroup -g 101 -S varnish; \
-	adduser -u 100 -D -S -s /bin/bash -G varnish varnish; \
+    addgroup -g 1000 -S varnish; \
+	adduser -u 1000 -D -S -s /bin/bash -G varnish varnish; \
 	echo "PS1='\w\$ '" >> /home/varnish/.bashrc; \
     \
     apk --update --no-cache -t .varnish-run-deps add \
