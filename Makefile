@@ -3,7 +3,7 @@
 VARNISH_VER ?= 6.0.16
 VARNISH_VER_MINOR = $(shell echo "${VARNISH_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
-ALPINE_VER ?= 3.20
+ALPINE_VER ?= 3.22
 
 PLATFORM ?= linux/arm64
 
