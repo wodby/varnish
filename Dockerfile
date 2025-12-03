@@ -170,7 +170,7 @@ RUN set -ex; \
     \
     mkdir -p /etc/init.d/; \
     touch /etc/varnish/preset.vcl /etc/init.d/varnishd; \
-    chown varnish:varnish /etc/varnish/preset.vcl /etc/init.d/varnishd; \
+    chown varnish:varnish /etc/varnish/preset.vcl; \
     chmod +x /etc/init.d/varnishd; \
     \
     while IFS= read -r file ; do rm -rf -- "${file}" ; done < /tmp/varnish-dev-files; \

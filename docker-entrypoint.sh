@@ -30,6 +30,7 @@ init_purge_key() {
 
 process_templates() {
     _gotpl 'varnishd.init.d.tmpl' '/etc/init.d/varnishd'
+    chmod +x /etc/init.d/varnishd
     _gotpl 'default.vcl.tmpl' '/etc/varnish/default.vcl'
 
     if [[ -n "${VARNISH_CONFIG_PRESET}" ]]; then
