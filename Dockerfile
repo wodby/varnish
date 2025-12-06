@@ -29,7 +29,8 @@ RUN set -ex; \
         ncurses-libs \
         openssl \
         pcre \
-        pwgen; \
+        pwgen \
+        xz-libs; \
     \
     apk --update --no-cache -t .varnish-build-deps add \
         attr \
@@ -49,7 +50,8 @@ RUN set -ex; \
         py3-docutils \
         py3-sphinx \
         python3 \
-        rsync; \
+        rsync \
+        xz-dev; \
     \
     varnish_url="http://varnish-cache.org/_downloads/varnish-${VARNISH_VER}.tgz"; \
     wget -qO- "${varnish_url}" | tar xz -C /tmp/; \
@@ -69,7 +71,7 @@ RUN set -ex; \
     \
     make -j "$(nproc)"; \
 # fails.
-#    make check; \
+    make check; \
     make DESTDIR=/tmp/pkg install; \
     \
     mkdir -p /usr/share/varnish; \
@@ -131,9 +133,9 @@ RUN set -ex; \
     ./configure; \
     make; \
     make install; \
-    if [[ "${TARGETPLATFORM}" != "linux/arm64" ]]; then \
+#    if [[ "${TARGETPLATFORM}" != "linux/arm64" ]]; then \
         make check; \
-    fi; \
+#    fi; \
     \
     libvmod_digest_ver="1.0.2"; \
     libvmod_digest_url="https://github.com/varnish/libvmod-digest/archive/libvmod-digest-${libvmod_digest_ver}.tar.gz"; \
@@ -143,9 +145,9 @@ RUN set -ex; \
     ./configure; \
     make; \
     make install; \
-    if [[ "${TARGETPLATFORM}" != "linux/arm64" ]]; then \
+#    if [[ "${TARGETPLATFORM}" != "linux/arm64" ]]; then \
         make check; \
-    fi; \
+#    fi; \
     \
     # we're using 6.0 branch instead of releases https://github.com/varnish/varnish-modules/issues/144
     git clone --depth 1 -b 6.0 --single-branch https://github.com/varnish/varnish-modules /tmp/varnish-modules; \
@@ -154,9 +156,9 @@ RUN set -ex; \
     ./configure; \
     make; \
     make install; \
-    if [[ "${TARGETPLATFORM}" != "linux/arm64" ]]; then \
+#    if [[ "${TARGETPLATFORM}" != "linux/arm64" ]]; then \
         make check; \
-    fi; \
+#    fi; \
     \
     install -d -o varnish -g varnish -m750 \
 		/var/cache/varnish \
