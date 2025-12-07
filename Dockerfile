@@ -57,7 +57,7 @@ RUN set -ex; \
     wget -qO- "${varnish_url}" | tar xz -C /tmp/; \
     cd /tmp/varnish-*; \
     mkdir -p /tmp/pkg; \
-    # Patch from alpine varnish package repository.
+    # Patch from alpine varnish package repository. \
     for i in /tmp/patches/"${VARNISH_VER:0:1}"/*.patch; do patch -p1 -i "${i}"; done; \
     \
     ./configure \
@@ -70,7 +70,6 @@ RUN set -ex; \
 		--without-jemalloc; \
     \
     make -j "$(nproc)"; \
-# fails.
     make check; \
     make DESTDIR=/tmp/pkg install; \
     \
@@ -88,7 +87,7 @@ RUN set -ex; \
         [ -n "$XATTR" ] && { echo "$XATTR" | setfattr --restore=-; } \
     done; \
     \
-    # Remove info, help, docs (default_docs from alpinelinux/abuild).
+    # Remove info, help, docs (default_docs from alpinelinux/abuild). \
     pkgdir=/tmp/pkg; \
     for i in doc man info html sgml gtk-doc ri help; do \
         if [ -d "$pkgdir/usr/share/$i" ]; then \
@@ -96,7 +95,7 @@ RUN set -ex; \
         fi; \
     done; \
     \
-    # Collect info about dev packages to delete after we run make check for modules.
+    # Collect info about dev packages to delete after we run make check for modules. \
     # (modified version of default_dev from alpinelinux/abuild).
     cd /tmp/pkg; \
     libdirs=usr/; \
@@ -125,7 +124,7 @@ RUN set -ex; \
     libvmod_geoip_ver="1.0.3"; \
     libvmod_geoip_url="https://github.com/varnish/libvmod-geoip/archive/libvmod-geoip-${libvmod_geoip_ver}.tar.gz"; \
     wget -qO- "${libvmod_geoip_url}" | tar xz -C /tmp/; \
-# @todo use .mmdb db instead of legacy .dat https://github.com/varnish/libvmod-geoip/issues/18
+# @todo use .mmdb db instead of legacy .dat https://github.com/varnish/libvmod-geoip/issues/18 \
 #    wget -qP /usr/share/GeoIP http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz; \
     gunzip /usr/share/GeoIP/GeoIP.dat.gz; \
     cd /tmp/libvmod-geoip-*; \
@@ -133,9 +132,7 @@ RUN set -ex; \
     ./configure; \
     make; \
     make install; \
-#    if [[ "${TARGETPLATFORM}" != "linux/arm64" ]]; then \
-        make check; \
-#    fi; \
+    make check; \
     \
     libvmod_digest_ver="1.0.2"; \
     libvmod_digest_url="https://github.com/varnish/libvmod-digest/archive/libvmod-digest-${libvmod_digest_ver}.tar.gz"; \
@@ -145,9 +142,7 @@ RUN set -ex; \
     ./configure; \
     make; \
     make install; \
-#    if [[ "${TARGETPLATFORM}" != "linux/arm64" ]]; then \
-        make check; \
-#    fi; \
+    make check; \
     \
     # we're using 6.0 branch instead of releases https://github.com/varnish/varnish-modules/issues/144
     git clone --depth 1 -b 6.0 --single-branch https://github.com/varnish/varnish-modules /tmp/varnish-modules; \
@@ -156,9 +151,7 @@ RUN set -ex; \
     ./configure; \
     make; \
     make install; \
-#    if [[ "${TARGETPLATFORM}" != "linux/arm64" ]]; then \
-        make check; \
-#    fi; \
+    make check; \
     \
     install -d -o varnish -g varnish -m750 \
 		/var/cache/varnish \

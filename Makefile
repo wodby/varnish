@@ -18,6 +18,8 @@ TAG ?= $(VARNISH_VER_MINOR)
 REPO = wodby/varnish
 NAME = varnish-$(VARNISH_VER_MINOR)
 
+IMAGETOOLS_TAG ?= $(TAG)
+
 ifneq ($(ARCH),)
 	override TAG := $(TAG)-$(ARCH)
 endif
@@ -45,9 +47,9 @@ buildx-push:
 	    ./
 
 buildx-imagetools-create:
-	docker buildx imagetools create -t $(REPO):$(TAG) \
-				$(REPO):$(VARNISH_VER_MINOR)-amd64 \
-				$(REPO):$(VARNISH_VER_MINOR)-arm64
+	docker buildx imagetools create -t $(REPO):$(IMAGETOOLS_TAG) \
+				$(REPO):$(TAG)-amd64 \
+				$(REPO):$(TAG)-arm64
 .PHONY: buildx-imagetools-create
 
 test:
