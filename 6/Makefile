@@ -1,6 +1,6 @@
 -include env.mk
 
-VINYL_VER ?= 6.0.16
+VINYL_VER ?= 6.0.18
 VINYL_VER_MINOR = $(shell echo "${VINYL_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
 ALPINE_VER ?= 3.22
