@@ -14,7 +14,7 @@ env:
   VINYL80: '8.0.2'
   VINYL60: '6.0.18'
   
-  BASE_IMAGE_STABILITY_TAG: 2.20.5
+  BASE_IMAGE_STABILITY_TAG: 2.20.6
 
 jobs:
   setup:
